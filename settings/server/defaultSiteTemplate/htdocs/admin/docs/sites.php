@@ -1,0 +1,66 @@
+<?php
+
+$user=loginModel::requireAdmin();
+
+$database=$SYSTEM_DATABASE;
+$table="sites";
+$single_name="Site";
+$multiple_name=$single_name."s";
+$list_fields=array(
+	'subdomain','active'
+);
+$search_fields=array(
+	'subdomain'
+);
+$edit_fields=array(
+	'subdomain'=>array(
+		'field_name'=>'subdomain',
+		'attr.pattern'=>"^[a-z0-9.-]+$",
+		'attr.class'=>"validate",
+		'attr.required'=>"required"
+	),
+	'aliases'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'SSL'=>array(
+		'edit_field_type'=>'t_or_f'
+	),
+	'AllowOverride'=>array(),
+	'cronjobs'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'rewrites'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'virtualhost_extras'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'dependencies_repositories'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'dependencies_packages'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'dependencies_commands'=>array(
+		'edit_field_type'=>'textarea'
+	),
+	'template'=>array(),
+	'database'=>array(),
+	'active'=>array(
+		'edit_field_type'=>'t_or_f'
+	),
+	'logo'=>array(
+		'edit_field_type'=>'file_base64',
+		'file_type'=>'image',
+		'show_file_preview'=>true
+	),
+	'favicon'=>array(
+		'edit_field_type'=>'file_base64',
+		'file_type'=>'image',
+		'show_file_preview'=>true
+	),
+);
+
+require_once dirname(__FILE__)."/template.php";
+$admin_class=new admin_doc_class;
+?>

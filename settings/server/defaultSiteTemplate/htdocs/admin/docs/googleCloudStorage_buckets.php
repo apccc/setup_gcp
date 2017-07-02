@@ -1,0 +1,78 @@
+<?php
+
+$user=loginModel::requireAdmin();
+
+$database=$SYSTEM_DATABASE;
+$table="googleCloudStorage_buckets";
+$single_name="Bucket";
+$multiple_name=$single_name."s";
+$list_fields=array(
+	'name','storageClass','bucketLocation'
+);
+$search_fields=array(
+	'name'
+);
+$edit_fields=array(
+	'name'=>array(
+		'default_value'=>'',
+		'attr.pattern'=>"^[a-z][a-z0-9_-]{1,64}$",
+		'attr.class'=>"validate",
+		'attr.required'=>"required"
+	),
+	'storageClass'=>array(
+		'edit_field_type'=>'radio',
+		'default_value'=>'DURABLE_REDUCED_AVAILABILITY',
+		'radios'=>array(
+			0=>array(
+				'display'=>'DURABLE_REDUCED_AVAILABILITY',
+				'value'=>'DURABLE_REDUCED_AVAILABILITY',
+			),
+			1=>array(
+				'display'=>'STANDARD',
+				'value'=>'STANDARD',
+			),
+		)
+	),
+	'bucketLocation'=>array(
+		'edit_field_type'=>'radio',
+		'default_value'=>'US',
+		'radios'=>array(
+			0=>array(
+				'display'=>'EU',
+				'value'=>'EU',
+			),
+			1=>array(
+				'display'=>'US',
+				'value'=>'US',
+			),
+			2=>array(
+				'display'=>'US-EAST1',
+				'value'=>'US-EAST1',
+			),
+			3=>array(
+				'display'=>'US-EAST2',
+				'value'=>'US-EAST2',
+			),
+			4=>array(
+				'display'=>'US-EAST3',
+				'value'=>'US-EAST3',
+			),
+			5=>array(
+				'display'=>'US-CENTRAL1',
+				'value'=>'US-CENTRAL1',
+			),
+			6=>array(
+				'display'=>'US-CENTRAL2',
+				'value'=>'US-CENTRAL2',
+			),
+			7=>array(
+				'display'=>'US-WEST1',
+				'value'=>'US-WEST1',
+			)
+		)
+	),
+);
+
+require_once dirname(__FILE__)."/template.php";
+$admin_class=new admin_doc_class;
+?>

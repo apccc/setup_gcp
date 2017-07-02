@@ -1,0 +1,6 @@
+mysql-client
+expect
+zip
+bc
+rsync
+pcregrep
