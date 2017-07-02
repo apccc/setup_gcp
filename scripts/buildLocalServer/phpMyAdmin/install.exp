@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+#
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+                          ;# script wasn't run conservatively originally
+if {$force_conservative} {
+        set send_slow {1 .1}
+        proc send {ignore arg} {
+                sleep .1
+                exp_send -s -- $arg
+        }
+}
+#
+
+set prompt "XXX#installphpmyadmin#XXX "
+
+set timeout -1
+spawn $env(SHELL)
+match_max 100000
+
+send -- "export PS1='$prompt'\r"
+expect "$prompt"
+
+send -- "apt-get install -y phpmyadmin"
+send -- "\r"
+
+expect {
+        "packages will be installed" {
+                expect {
+                        "Configure database for phpmyadmin with dbconfig-common? " {
+                                send -- "No"
+                                send -- "\r"
+                                exp_continue
+                        }
+                        "Web server to reconfigure automatically: " {
+                                send -- "1"
+                                send -- "\r"
+                                exp_continue
+                        }
+                        "$prompt" {
+                        }
+                }
+        }
+        "config file /etc/phpmyadmin/config-db.php with new version" {
+                expect "$prompt"
+        }
+        "phpmyadmin is already the newest version." {
+                expect "$prompt"
+        }
+}
+
+send -- "exit\r"
+
+expect eof

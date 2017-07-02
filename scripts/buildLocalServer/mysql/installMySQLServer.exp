@@ -1,0 +1,48 @@
+#!/usr/bin/expect -f
+
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+                          ;# script wasn't run conservatively originally
+if {$force_conservative} {
+        set send_slow {1 .1}
+        proc send {ignore arg} {
+                sleep .1
+                exp_send -s -- $arg
+        }
+}
+
+
+set timeout -1
+set rand [expr floor(rand()*9999999)+100]
+set prompt "#|#|$rand|#|#";
+spawn $env(SHELL) -s lh63YaPc
+match_max 100000
+send -- "export PS1='$prompt'\r"
+expect "$prompt"
+
+set pass [exec ~/setup/settings/get/mysql_r_pw.sh]
+
+expect "$prompt"
+
+set timeout 30
+send -- "sudo apt-get install mysql-server\r"
+expect {
+        "Do you want to continue" {
+                expect "? "
+                send -- "Y\r"
+                expect "New password for the MySQL \"root\" user: "
+                send -- "$pass\r"
+                expect "Repeat password for the MySQL \"root\" user: "
+                send -- "$pass\r"
+                expect "Setting up mysql-server"
+                expect "$prompt"
+        }
+        "mysql-server is already the newest version" {
+                expect "$prompt"
+        }
+        timeout {
+                send -- "echo 'timeout'\r"
+        }
+}
+
+send -- "exit\r"
+expect eof
