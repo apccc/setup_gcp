@@ -1,4 +1,9 @@
 #!/bin/bash
+#make sure this is not already running
+if [ `~/setup/scripts/cron/tools/checkForExistingProcess.sh "$$" 10` == '1' ];then
+  echo "Process is Running"
+  exit 1
+fi
 
 source ~/setup/settings/core.sh
 
