@@ -21,9 +21,10 @@ if [ -z $OUTPUTFILE ];then
 fi
 
 ZDIRNAME=`dirname "$INPUTDIR"`
-ZBASNAME=`basename "$INPUTDIR"`
+ZBASENAME=`basename "$INPUTDIR"`
 
 cd "$ZDIRNAME"
+echo "Compressing ${INPUTDIR} to ${OUTPUTFILE}..."
 tar -zcf "$OUTPUTFILE" "$ZBASENAME"
-
+echo "Done compressing."
 exit 0
