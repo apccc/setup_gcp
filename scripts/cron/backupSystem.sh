@@ -16,6 +16,8 @@ if [ ! -f $GSUTIL ];then
   exit 1
 fi
 
+BACKUP_IDENTIFIER_STAMP="$(date +%u)"
+
 echo " * Running Google Cloud Storage Scheduled Backups for $HOSTNAME"
 
 #see if there are any scheduled backups
@@ -56,15 +58,20 @@ for SCHEDULEDBACKUPS_ID in $($MY 'SELECT id FROM `'"${SYSTEM_DATABASE}"'`.`googl
   if [ "$SCHEDULEDBACKUPS_LASTRUN" == "0000-00-00 00:00:00" ];then
     echo " * Backup not run - will try to create the bucket:"
     $GSUTIL mb -p "$(~/setup/settings/get/gcloud/project-id.sh)" -c "$SCHEDULEDBACKUPS_STORAGECLASS" -l "$SCHEDULEDBACKUPS_BUCKETLOCATION" "gs://$GCSBUCKET"
-    echo " * Will try to upload the entire path for the first run:"
-    $GSUTIL cp -c -e -R "$SCHEDULEDBACKUPS_PATH/*" "gs://$GCSBUCKET/"
-  else
-    echo " * Backup already has run - let's just upload the recently modified files..."
-    echo "Source: $SCHEDULEDBACKUPS_PATH"
-    echo "Destination: gs://$GCSBUCKET"
-    $GSUTIL -m rsync -d -r "$SCHEDULEDBACKUPS_PATH" "gs://$GCSBUCKET"
   fi
-
+  echo "Source: $SCHEDULEDBACKUPS_PATH"
+  echo "Destination: gs://$GCSBUCKET"
+  SCHEDULEDBACKUPS_COMPRESSED_FILE_NAME=`echo "$SCHEDULEDBACKUPS_PATH" | sed 's/\//./g' | sed 's/[^a-zA-Z0-9_.-]//g'`"${BACKUP_IDENTIFIER_STAMP}.tar.gz"
+  SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR="/tmp/backupsystem/$GCSBUCKET"
+  if [ ! -d "$SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR" ];then
+    mkdir -p $SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR
+  fi
+  SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH="${SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR}/${SCHEDULEDBACKUPS_COMPRESSED_FILE_NAME}"
+  ~/setup/scripts/tools/datamanagement/compressDirectoryToTarGz.sh "$SCHEDULEDBACKUPS_PATH" "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
+  echo "Copying $SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH to gs://$GCSBUCKET"
+  $GSUTIL cp "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH" "gs://$GCSBUCKET"
+  echo "Removing local file $SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
+  rm "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
   echo " * Done with scheduled backup $SCHEDULEDBACKUPS_ID. $(date)"
 done
 
