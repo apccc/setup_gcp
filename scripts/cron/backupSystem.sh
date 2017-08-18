@@ -8,6 +8,7 @@ fi
 source ~/setup/settings/core.sh
 
 ~/setup/scripts/cron/backupMySQL.sh 
+crontab -l > ~/crontab.out.txt
 
 GSUTIL=`which gsutil`
 
