@@ -6,6 +6,7 @@ if [ ! -d ~/setup-config/setup_gcp ];then
  mkdir -p ~/setup-config/setup_gcp;
 fi
 if [ ! -f ~/setup-config/setup_gcp/core.sh ];then
+ echo "Setting up core settings file."
  cp ~/setup_gcp/settings/core.template.sh ~/setup-config/setup_gcp/core.sh
 fi
 
