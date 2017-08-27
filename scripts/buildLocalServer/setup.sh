@@ -35,6 +35,7 @@ fi
 if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
   echo -n "Enter the Admin Password: "
   read -s SYSADMININITPASSWORD
+  echo ""
   sed -i -e "s/<<SYSADMININITPASSWORD>>/${SYSADMININITPASSWORD}/g" "$F"
 fi
 if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
@@ -57,6 +58,7 @@ fi
 if [ `grep '<<MAILGUNSMTPPASSWORD>>' "$F" | wc -l` -gt 0 ];then
   echo -n "Enter the Mailgun SMTP Password: "
   read -s MAILGUNSMTPPASSWORD
+  echo ""
   sed -i -e "s/<<MAILGUNSMTPPASSWORD>>/${MAILGUNSMTPPASSWORD}/g" "$F"
 fi
 if [ `grep '<<RECAPTCHASSITEKEY>>' "$F" | wc -l` -gt 0 ];then
@@ -67,6 +69,7 @@ fi
 if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
   echo -n "Enter the ReCaptcha Secret Key: "
   read -s RECAPTCHASECRETKEY
+  echo ""
   sed -i -e "s/<<RECAPTCHASECRETKEY>>/${RECAPTCHASECRETKEY}/g" "$F"
 fi
 
