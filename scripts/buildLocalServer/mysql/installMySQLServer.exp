@@ -19,7 +19,7 @@ match_max 100000
 send -- "export PS1='$prompt'\r"
 expect "$prompt"
 
-set pass [exec ~/setup/settings/get/mysql_r_pw.sh]
+set pass [exec ~/setup_gcp/settings/get/mysql_r_pw.sh]
 
 expect "$prompt"
 
