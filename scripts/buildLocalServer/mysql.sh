@@ -1,11 +1,8 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 echo "* Setting up MySQL Server for $COMPANY_NAME on $HOSTNAME"
-
-~/setup/scripts/buildLocalServer/mysql/installMySQLServer.exp
-
+~/setup_gcp/scripts/buildLocalServer/mysql/installMySQLServer.exp
 echo "* Done setting up MySQL Server"
-
 exit 0
