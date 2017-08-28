@@ -72,5 +72,6 @@ if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
   echo ""
   sed -i -e "s/<<RECAPTCHASECRETKEY>>/${RECAPTCHASECRETKEY}/g" "$F"
 fi
-
+#Do the builds
+~/setup_gcp/scripts/buildLocalServer/basics.sh
 exit 0
