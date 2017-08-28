@@ -5,13 +5,16 @@ source ~/setup/settings/core.sh
 echo "* Building Apache 2 Web Server for $COMPANY_NAME on $HOSTNAME"
 echo "**********************************************"
 echo "* Updating apt-get:"
-sudo apt-get update
+sudo apt-get update -qq
 
 echo "* Installing apache2:"
-sudo apt-get install -y apache2
+sudo apt-get install -yqq apache2
 
 echo "* Installing libapache2-mod-php5:"
-sudo apt-get install -y libapache2-mod-php5
+sudo apt-get install -yqq libapache2-mod-php5
+
+echo "* Installing php5-mysql:"
+sudo apt-get install -yqq php5-mysql
 
 #clear out existing sites-enabled files
 if [ -d /etc/apache2/sites-enabled ];then
