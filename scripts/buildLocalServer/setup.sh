@@ -74,4 +74,5 @@ if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
 fi
 #Do the builds
 ~/setup_gcp/scripts/buildLocalServer/basics.sh
+~/setup_gcp/scripts/buildLocalServer/mysql.sh
 exit 0
