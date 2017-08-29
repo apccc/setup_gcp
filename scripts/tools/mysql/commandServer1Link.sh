@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 mysqlPass=`~/setup_gcp/settings/get/mysql_r_pw.sh`
 
