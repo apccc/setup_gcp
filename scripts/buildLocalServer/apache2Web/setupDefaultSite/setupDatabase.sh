@@ -194,9 +194,9 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'sites';" | tail -n +2 | wc 
 
   CRTMP='/tmp/crtmp.txt'
   touch $CRTMP
-  echo '2 2 * * * ~/setup/scripts/cron/backupSystem.sh > ~/cron.backupSystem.log 2>&1' >> $CRTMP
-  echo '3 3 3 * * ~/setup/scripts/cron/renewSSLCerts.sh > ~/cron.renewSSLCerts.log 2>&1' >> $CRTMP
-  echo '4 4 * * 6 ~/setup/scripts/cron/updateSystem.sh > ~/cron.updateSystem.log 2>&1' >> $CRTMP
+  echo '2 2 * * * ~/setup_gcp/scripts/cron/backupSystem.sh > ~/cron.backupSystem.log 2>&1' >> $CRTMP
+  echo '3 3 3 * * ~/setup_gcp/scripts/cron/renewSSLCerts.sh > ~/cron.renewSSLCerts.log 2>&1' >> $CRTMP
+  echo '4 4 * * 6 ~/setup_gcp/scripts/cron/updateSystem.sh > ~/cron.updateSystem.log 2>&1' >> $CRTMP
   C=`cat "$CRTMP"`
   rm $CRTMP
 
@@ -294,7 +294,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_buckets'
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_buckets` (`id`,`name`,`storageClass`,`bucketLocation`) '
   X=$X'VALUES ("'"$BID"'","'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
   $MY "$X"
-  gsutil mb -p "$(~/setup/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
+  gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
 
   BID="2"
   BNAME="zstore_${STORAGE_IDENTIFIER}_home"
@@ -303,7 +303,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_buckets'
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_buckets` (`id`,`name`,`storageClass`,`bucketLocation`) '
   X=$X'VALUES ("'"$BID"'","'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
   $MY "$X"
-  gsutil mb -p "$(~/setup/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
+  gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
 fi
 
 
@@ -360,7 +360,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_VMInsta
   $MY "$X"
 
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` (`name`,`zone`,`region`,`machine_type`,`ip`,`active`) '
-  X=$X'VALUES ("'"$(hostname)"'","'"$(~/setup/settings/get/gcloud/zone.sh)"'","'"$(~/setup/settings/get/gcloud/region.sh)"'","'"$(~/setup/settings/get/gcloud/machine-type.sh)"'","'"$(~/setup/settings/get/gcloud/ip.sh)"'","T");'
+  X=$X'VALUES ("'"$(hostname)"'","'"$(~/setup_gcp/settings/get/gcloud/zone.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/region.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/machine-type.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/ip.sh)"'","T");'
   $MY "$X"
 fi
 
