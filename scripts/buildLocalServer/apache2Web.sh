@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup_gcp/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 echo "* Building Apache 2 Web Server for $COMPANY_NAME on $HOSTNAME"
 echo "**********************************************"
