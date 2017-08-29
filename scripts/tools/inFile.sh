@@ -14,7 +14,7 @@ if [ -z "$FILE" ];then
         exit
 fi
 
-FIND=`~/setup/scripts/tools/escapeStringForPcregrep.sh "$STRING"`
+FIND=`~/setup_gcp/scripts/tools/escapeStringForPcregrep.sh "$STRING"`
 FPCREGREP=/tmp/f.fpcregrep
 echo "$FIND" > $FPCREGREP
 if [ `/usr/bin/pcregrep -c -M -f $FPCREGREP $FILE` -lt 1 ];then
