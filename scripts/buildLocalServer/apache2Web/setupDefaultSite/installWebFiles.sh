@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 echo " * Installing Default Site Web Files"
 
 D="/var/www/${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}"
 echo " * Setting up site files at $D"
-sudo rsync -av ~/setup/settings/server/defaultSiteTemplate/htdocs "$D/"
+sudo rsync -av ~/setup_gcp/settings/server/defaultSiteTemplate/htdocs "$D/"
 
 F="$D/settings.php"
 echo " * Setting up $F"
