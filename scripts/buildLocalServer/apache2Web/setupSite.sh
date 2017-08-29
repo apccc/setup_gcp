@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 SUBDOMAIN="$1"
 if [ -z "$SUBDOMAIN" ];then
@@ -34,7 +34,7 @@ fi
 #setup the Web files for the site
 if [ ! -d "$D/htdocs" ];then
   if [ ! -z "${SITETEMPLATE}" ];then
-    X=~/setup/settings/server/${SITETEMPLATE}SiteTemplate/htdocs
+    X=~/setup_gcp/settings/server/${SITETEMPLATE}SiteTemplate/htdocs
   fi
   if [ ! -z "${SITETEMPLATE}" ] && [ -d $X ];then
     sudo rsync -av "$X" "$D/"
@@ -48,7 +48,7 @@ if [ ! -z "$SITEDATABASE" ] && [ ! -z "${SITETEMPLATE}" ];then
   #if the database does not exist and is set
   if [[ `$MY "SHOW DATABASES LIKE '${SITEDATABASE}';" | tail -n 1 | wc -l` -lt 1 ]];then
     #look for the execution file
-    F=~/setup/settings/server/${SITETEMPLATE}SiteTemplate/databaseSetup.sh
+    F=~/setup_gcp/settings/server/${SITETEMPLATE}SiteTemplate/databaseSetup.sh
     if [ -f $F ];then
     echo " * Setting up site template database."
       $F "${SITEDATABASE}"
@@ -58,7 +58,7 @@ fi
 
 #setup the Web settings for the site
 if [ ! -z "${SITETEMPLATE}" ];then
-  F=~/setup/settings/server/${SITETEMPLATE}SiteTemplate/settingsSetup.sh
+  F=~/setup_gcp/settings/server/${SITETEMPLATE}SiteTemplate/settingsSetup.sh
   if [ -f $F ];then
     echo " * Setting up site template settings."
     $F "${SUBDOMAIN}"
@@ -174,9 +174,9 @@ if [ "$SSL" == "T" ];then
     echo " * SSL Cert Needed for $SUBDOMAIN - will try to obtain one:"
     if [ ! -z "$ALIASES" ];then
       X=`echo -e "${ALIASES}\n${SUBDOMAIN}" | tr "\n" ',' | tr ",," "," | sed 's/,$//'`
-      ~/setup/scripts/buildLocalServer/apache2Web/letsencrypt/getCertForDomains.sh "$SUBDOMAIN" "$X"
+      ~/setup_gcp/scripts/buildLocalServer/apache2Web/letsencrypt/getCertForDomains.sh "$SUBDOMAIN" "$X"
     else
-      ~/setup/scripts/buildLocalServer/apache2Web/letsencrypt/getCertForDomain.sh "$SUBDOMAIN"
+      ~/setup_gcp/scripts/buildLocalServer/apache2Web/letsencrypt/getCertForDomain.sh "$SUBDOMAIN"
     fi
   fi
 fi
