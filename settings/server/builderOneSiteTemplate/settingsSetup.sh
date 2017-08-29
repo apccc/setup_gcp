@@ -1,7 +1,7 @@
 #!/bin/bash
 #builderOne
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 SUBDOMAIN="$1"
 if [ -z "$SUBDOMAIN" ];then
