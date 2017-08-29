@@ -2,7 +2,7 @@
 
 source ~/setup/settings/core.sh
 
-mysqlPass=`~/setup/settings/get/mysql_r_pw.sh`
+mysqlPass=`~/setup_gcp/settings/get/mysql_r_pw.sh`
 
 if [[ ! $1 ]];then
   echo '* mysql command server 1 link error - command not set'
