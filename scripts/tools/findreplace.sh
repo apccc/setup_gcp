@@ -26,16 +26,16 @@ if [ ! -f $FILE ];then
 	exit 1
 fi
 
-F=`~/setup/scripts/tools/escapeStringForPcregrep.sh "$FIND"`
-R=`~/setup/scripts/tools/escapeStringForPcregrep.sh "$REPLACE"`
+F=`~/setup_gcp/scripts/tools/escapeStringForPcregrep.sh "$FIND"`
+R=`~/setup_gcp/scripts/tools/escapeStringForPcregrep.sh "$REPLACE"`
 FPCREGREP=/tmp/f.fpcregrep
 RPCREGREP=/tmp/r.fpcregrep
 echo "$F" > $FPCREGREP
 echo "$R" > $RPCREGREP
 if [ `/usr/bin/pcregrep -c -M -f $FPCREGREP $FILE` -eq 1 ];then
 	if [ `/usr/bin/pcregrep -c -M -f $RPCREGREP $FILE` -lt 1 ];then
-	        F=`~/setup/scripts/tools/escapeStringForSed.sh "$FIND"`
-		R=`~/setup/scripts/tools/escapeStringForSed.sh "$REPLACE"`
+	        F=`~/setup_gcp/scripts/tools/escapeStringForSed.sh "$FIND"`
+		R=`~/setup_gcp/scripts/tools/escapeStringForSed.sh "$REPLACE"`
 		echo ""
 		echo "Find and replace in progress on \"$FILE\"."
 		TMPSED=/tmp/cmds.sed
