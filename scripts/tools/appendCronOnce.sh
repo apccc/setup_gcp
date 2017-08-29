@@ -22,7 +22,7 @@ fi
 
 
 #ADD NTPDATE TO THE CRON
-FIND=`~/setup/scripts/tools/escapeStringForPcregrep.sh "$CHECK"`
+FIND=`~/setup_gcp/scripts/tools/escapeStringForPcregrep.sh "$CHECK"`
 FPCREGREP=/tmp/ac.find.fpcregrep
 CRONPCREGREP=/tmp/ac.cron.fpcregrep
 $CRONTAB -l > $CRONPCREGREP
