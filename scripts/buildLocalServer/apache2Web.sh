@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 echo "* Building Apache 2 Web Server for $COMPANY_NAME on $HOSTNAME"
 echo "**********************************************"
@@ -22,9 +22,9 @@ if [ -d /etc/apache2/sites-enabled ];then
   sudo rm /etc/apache2/sites-enabled/*
 fi
 
-~/setup/scripts/buildLocalServer/apache2Web/setupExtrasetup.conf.sh
-~/setup/scripts/buildLocalServer/apache2Web/setupDefaultSite.sh
-~/setup/scripts/buildLocalServer/apache2Web/setupServerSites.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupExtrasetup.conf.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupDefaultSite.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupServerSites.sh
 
 echo "* Enabling mod_ssl"
 sudo a2enmod ssl
