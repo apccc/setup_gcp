@@ -1,14 +1,14 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 echo " * Setting up phpMyAdmin"
 
 #start by setting up apache2
-~/setup/scripts/buildLocalServer/apache2Web.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
 
 #install phpMyAdmin
-sudo ~/setup/scripts/buildLocalServer/phpMyAdmin/install.sh
+sudo ~/setup_gcp/scripts/buildLocalServer/phpMyAdmin/install.sh
 
 FORIG=/etc/phpmyadmin/apache.conf
 F=/tmp/setup.phpmyadmin.conf
