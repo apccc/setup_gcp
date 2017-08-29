@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 MUSER='root'
 MPASS=${MYSQL_ROOT_PW}
