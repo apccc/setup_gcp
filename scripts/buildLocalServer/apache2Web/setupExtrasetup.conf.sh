@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 FORIG=/etc/apache2/conf-available/extrasetup.conf
 F=/tmp/extrasetupconf.txt
