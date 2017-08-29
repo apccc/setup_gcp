@@ -14,7 +14,7 @@ TMP=/tmp/pubkeys.tmp
 #we need some keys
 sudo apt-get update 2>&1 | grep NO_PUBKEY | egrep -o -e '[0-9A-Z]+$' > $TMP
 while read KEY;do
-  ~/setup/scripts/tools/gpgFixMissingPubkey.sh "$KEY"
+  ~/setup_gcp/scripts/tools/gpgFixMissingPubkey.sh "$KEY"
 done < $TMP
 rm $TMP
 
