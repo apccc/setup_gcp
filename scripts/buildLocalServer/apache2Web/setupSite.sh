@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup_gcp/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 SUBDOMAIN="$1"
 if [ -z "$SUBDOMAIN" ];then
