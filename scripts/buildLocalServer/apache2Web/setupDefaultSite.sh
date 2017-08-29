@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 echo "* Building the default site ${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}"
 echo "****************************"
@@ -25,13 +25,13 @@ if [ ! -d "$D/htdocs" ];then
 fi
 
 echo " * Installing Web files to ${D}:"
-~/setup/scripts/buildLocalServer/apache2Web/setupDefaultSite/installWebFiles.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupDefaultSite/installWebFiles.sh
 
 echo " * Set up Database:"
-~/setup/scripts/buildLocalServer/apache2Web/setupDefaultSite/setupDatabase.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupDefaultSite/setupDatabase.sh
 
 
-~/setup/scripts/buildLocalServer/apache2Web/setupSite.sh "${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}"
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupSite.sh "${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}"
 
 echo " * Done building the default site ${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}"
 
