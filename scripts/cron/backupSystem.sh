@@ -1,13 +1,13 @@
 #!/bin/bash
 #make sure this is not already running
-if [ `~/setup/scripts/cron/tools/checkForExistingProcess.sh "$$" 10` == '1' ];then
+if [ `~/setup_gcp/scripts/cron/tools/checkForExistingProcess.sh "$$" 10` == '1' ];then
   echo "Process is Running"
   exit 1
 fi
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
-~/setup/scripts/cron/backupMySQL.sh 
+~/setup_gcp/scripts/cron/backupMySQL.sh 
 crontab -l > ~/crontab.out.txt
 
 GSUTIL=`which gsutil`
@@ -58,7 +58,7 @@ for SCHEDULEDBACKUPS_ID in $($MY 'SELECT id FROM `'"${SYSTEM_DATABASE}"'`.`googl
 
   if [ "$SCHEDULEDBACKUPS_LASTRUN" == "0000-00-00 00:00:00" ];then
     echo " * Backup not run - will try to create the bucket:"
-    $GSUTIL mb -p "$(~/setup/settings/get/gcloud/project-id.sh)" -c "$SCHEDULEDBACKUPS_STORAGECLASS" -l "$SCHEDULEDBACKUPS_BUCKETLOCATION" "gs://$GCSBUCKET"
+    $GSUTIL mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$SCHEDULEDBACKUPS_STORAGECLASS" -l "$SCHEDULEDBACKUPS_BUCKETLOCATION" "gs://$GCSBUCKET"
   fi
   echo "Source: $SCHEDULEDBACKUPS_PATH"
   echo "Destination: gs://$GCSBUCKET"
@@ -68,7 +68,7 @@ for SCHEDULEDBACKUPS_ID in $($MY 'SELECT id FROM `'"${SYSTEM_DATABASE}"'`.`googl
     mkdir -p $SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR
   fi
   SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH="${SCHEDULEDBACKUPS_COMPRESSED_FILE_DIR}/${SCHEDULEDBACKUPS_COMPRESSED_FILE_NAME}"
-  ~/setup/scripts/tools/datamanagement/compressDirectoryToTarGz.sh "$SCHEDULEDBACKUPS_PATH" "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
+  ~/setup_gcp/scripts/tools/datamanagement/compressDirectoryToTarGz.sh "$SCHEDULEDBACKUPS_PATH" "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
   echo "Copying $SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH to gs://$GCSBUCKET"
   $GSUTIL cp "$SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH" "gs://$GCSBUCKET"
   echo "Removing local file $SCHEDULEDBACKUPS_COMPRESSED_FILE_PATH"
