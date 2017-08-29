@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 echo "* Building Bind9 DNS Server"
 echo "****************************"
