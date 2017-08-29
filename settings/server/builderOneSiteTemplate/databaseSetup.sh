@@ -1,6 +1,6 @@
 #!/bin/bash
 #builderOne
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 if [ -z "$1" ];then
   echo "Site database name not set!"
