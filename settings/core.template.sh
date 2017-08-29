@@ -28,8 +28,8 @@ HOSTNAME=`hostname`
 STORAGE_IDENTIFIER=`echo "${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}_$(hostname)" | tr '.' '_'`
 
 #commands
-FR=~/setup/scripts/tools/findreplace.sh
-AP=~/setup/scripts/tools/appendFileOnce.sh
-AC=~/setup/scripts/tools/appendCronOnce.sh
-IN=~/setup/scripts/tools/inFile.sh
-MY=~/setup/scripts/tools/mysql/commandServer1Link.sh
+FR=~/setup_gcp/scripts/tools/findreplace.sh
+AP=~/setup_gcp/scripts/tools/appendFileOnce.sh
+AC=~/setup_gcp/scripts/tools/appendCronOnce.sh
+IN=~/setup_gcp/scripts/tools/inFile.sh
+MY=~/setup_gcp/scripts/tools/mysql/commandServer1Link.sh
