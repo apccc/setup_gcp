@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 ZDOMAIN=`echo "$1" | egrep -m1 -oe '[a-z0-9.]*'`
 
