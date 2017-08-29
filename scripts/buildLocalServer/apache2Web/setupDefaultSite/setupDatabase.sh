@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup_gcp/settings/core.sh
 
 echo " * Setting up database for default Web site"
 
