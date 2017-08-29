@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source ~/setup/settings/core.sh
+source ~/setup-config/setup_gcp/core.sh
 
 #make sure letsencrypt is installed
-~/setup/scripts/buildLocalServer/apache2Web/letsencrypt/installLetsencrypt.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/letsencrypt/installLetsencrypt.sh
 
 ZDOMAIN=`echo "$1" | egrep -m1 -oe '[a-z0-9.]*'`
 
@@ -38,7 +38,7 @@ sudo /root/letsencrypt/letsencrypt-auto certonly --agree-tos --standalone --rene
 echo " * Check log for more details ${LOGDIRECTORY}/getcert.${ZDOMAIN}.log"
 
 #put the cert in place
-~/setup/scripts/buildLocalServer/apache2Web/letsencrypt/updateCertRecordsForDomain.sh "$ZDOMAIN"
+~/setup_gcp/scripts/buildLocalServer/apache2Web/letsencrypt/updateCertRecordsForDomain.sh "$ZDOMAIN"
 
 #start apache
 sudo /etc/init.d/apache2 start
