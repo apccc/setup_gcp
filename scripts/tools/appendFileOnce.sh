@@ -22,7 +22,7 @@ if [ ! -f $FILE ];then
 fi
 
 #check if string is already in file
-FIND=`~/setup/scripts/tools/escapeStringForPcregrep.sh "$STRING"`
+FIND=`~/setup_gcp/scripts/tools/escapeStringForPcregrep.sh "$STRING"`
 FPCREGREP=/tmp/f.fpcregrep
 echo "$FIND" > $FPCREGREP
 if [ `/usr/bin/pcregrep -c -M -f $FPCREGREP $FILE` -lt 1 ];then
@@ -31,7 +31,7 @@ if [ `/usr/bin/pcregrep -c -M -f $FPCREGREP $FILE` -lt 1 ];then
                 echo "$STRING" >> $FILE
         else
                 F=/tmp/appendFileOnce.tmp
-                X2="${LINE}i"`~/setup/scripts/tools/escapeStringForSed.sh "$STRING"`
+                X2="${LINE}i"`~/setup_gcp/scripts/tools/escapeStringForSed.sh "$STRING"`
                 echo $X2
                 sed "$X2" $FILE > $F
                 if [ `/usr/bin/pcregrep -c -M -f $FPCREGREP $F` -gt 0 ];then
