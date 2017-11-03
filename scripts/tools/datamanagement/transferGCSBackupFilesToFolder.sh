@@ -22,7 +22,7 @@ TMPFILEFOLDER="/tmp/setupgcstrans$TS"
 #make tmp folder
 if [ ! -d "$TMPFILEFOLDER" ];then
   echo "Making $TMPFILEFOLDER"
-  #mkdir "$TMPFILEFOLDER"
+  mkdir "$TMPFILEFOLDER"
 fi
 
 #download to tmp folder
