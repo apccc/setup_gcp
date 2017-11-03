@@ -16,7 +16,7 @@ fi
 if [ ! -d "$DESTINATIONFOLDER" ];then
   mkdir "$DESTINATIONFOLDER";
 fi
-RAND=`cat /dev/urandom | tr -dc _A-Z-a-z-0-9 | head -c${1:-32}`
+RAND=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;`
 TMPFILEFOLDER="/tmp/setupgcstrans_${RAND}"
 
 #make tmp folder
