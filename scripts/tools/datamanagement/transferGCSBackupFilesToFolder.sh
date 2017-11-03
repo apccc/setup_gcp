@@ -37,7 +37,10 @@ FILEEXT="${DOWNLOADEDTMPFILE##*.}"
 echo "File extension found: $FILEEXT"
 
 #extract file from tmp folder
-#tar xf file.tar.gz -C "${DESTINATIONFOLDER}"
+if [ "$FILEEXT" == 'gz' ];then
+  echo "Extracting file ${TMPFILEFOLDER}/${DOWNLOADEDTMPFILE} to ${DESTINATIONFOLDER}"
+  tar xf "${TMPFILEFOLDER}/${DOWNLOADEDTMPFILE}" -C "${DESTINATIONFOLDER}"
+fi
 
 #clean up
 if [ -d "$TMPFILEFOLDER" ];then
