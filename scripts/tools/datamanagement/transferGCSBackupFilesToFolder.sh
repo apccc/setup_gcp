@@ -26,7 +26,7 @@ fi
 
 #download to tmp folder
 echo "Downloading ${GCSSOURCEPATH} to ${TMPFILEFOLDER}/";
-gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
+#gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 
 #locate file from tmp folder
 
