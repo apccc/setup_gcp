@@ -1,6 +1,9 @@
 #!/bin/bash
 #Grab Google Cloud Storage backup files and set them up in a folder.
 
+#e.g.:
+#scripts/tools/datamanagement/transferGCSBackupFilesToFolder.sh zstore_gcvma_datasciencecentral_com_home/7.home.abrahamchaffin.tar.gz /home/
+
 if [ -z "$1" ];then
   echo "Error: GCS source object path not provided."
   exit 1
