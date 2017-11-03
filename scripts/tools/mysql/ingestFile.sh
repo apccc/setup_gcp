@@ -28,10 +28,4 @@ else
   mysql -u root -p$mysqlPass --host "$MYSQL_1_HOST" < "${INCOMINGFILE}"
 fi
 
-#cleanup tmp folder
-if [ -d "$TMPFILEFOLDER" ];then
-  echo "Removing $TMPFILEFOLDER"
-  rm -rf "$TMPFILEFOLDER"
-fi
-
 exit 0
