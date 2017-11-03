@@ -19,6 +19,23 @@ FILEEXT="${BASEFILENAME##*.}"
 echo "File extension found: $FILEEXT"
 
 if [ "$FILEEXT" == 'gz' ];then
+
+  TS=`date +%s`
+  TMPFILEFOLDER="/tmp/setupgcstrans$TS"
+
+  #make tmp folder
+  if [ ! -d "$TMPFILEFOLDER" ];then
+    echo "Making $TMPFILEFOLDER"
+    mkdir "$TMPFILEFOLDER"
+  fi
+
+  
+
+  #cleanup tmp folder
+  if [ -d "$TMPFILEFOLDER" ];then
+    echo "Removing $TMPFILEFOLDER"
+    rm -rf "$TMPFILEFOLDER"
+  fi
 fi
 
 
