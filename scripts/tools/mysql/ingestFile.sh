@@ -18,11 +18,10 @@ echo "File found: $BASEFILENAME"
 FILEEXT="${BASEFILENAME##*.}"
 echo "File extension found: $FILEEXT"
 
+TS=`date +%s`
+TMPFILEFOLDER="/tmp/setupgcstrans$TS"
+
 if [ "$FILEEXT" == 'gz' ];then
-
-  TS=`date +%s`
-  TMPFILEFOLDER="/tmp/setupgcstrans$TS"
-
   #make tmp folder
   if [ ! -d "$TMPFILEFOLDER" ];then
     echo "Making $TMPFILEFOLDER"
@@ -32,13 +31,22 @@ if [ "$FILEEXT" == 'gz' ];then
   echo "Extracting file ${INCOMINGFILE} to ${TMPFILEFOLDER}"
   tar xf "${INCOMINGFILE}" -C "${TMPFILEFOLDER}"
 
-  #cleanup tmp folder
-  if [ -d "$TMPFILEFOLDER" ];then
-    echo "Removing $TMPFILEFOLDER"
-    rm -rf "$TMPFILEFOLDER"
-  fi
+  #locate file from tmp folder
+  EXTRACTEDFILE=`ls -1 "${TMPFILEFOLDER}/"`
+  echo "Extracted file: ${EXTRACTEDFILE}"
+
+  #Use new file
+  MYSQLINPUTFILEPATH="${TMPFILEFOLDER}/${EXTRACTEDFILE}"
+else
+  MYSQLINPUTFILEPATH="${INCOMINGFILE}"
 fi
 
+echo "Ingesting MySQL File: $MYSQLINPUTFILEPATH"
 
-echo "Ingesting MySQL File"
+#cleanup tmp folder
+if [ -d "$TMPFILEFOLDER" ];then
+  echo "Removing $TMPFILEFOLDER"
+  rm -rf "$TMPFILEFOLDER"
+fi
+
 exit 0
