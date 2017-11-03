@@ -10,6 +10,9 @@ if [ ! -f "$1" ];then
   exit 1
 fi
 
+source ~/setup-config/setup_gcp/core.sh
+mysqlPass=`~/setup_gcp/settings/get/mysql_r_pw.sh`
+
 INCOMINGFILE="$1"
 
 BASEFILENAME=`basename ${INCOMINGFILE}`
@@ -18,13 +21,12 @@ echo "File found: $BASEFILENAME"
 FILEEXT="${BASEFILENAME##*.}"
 echo "File extension found: $FILEEXT"
 
+echo "Ingesting File to MySQL: $INCOMINGFILE"
 if [ "$FILEEXT" == 'gz' ];then
-  zcat "$INCOMINGFILE" | mysql -u root -p
+  zcat "$INCOMINGFILE" | mysql -u root -p$mysqlPass --host "$MYSQL_1_HOST"
 else
-  MYSQLINPUTFILEPATH="${INCOMINGFILE}"
+  mysql -u root -p$mysqlPass --host "$MYSQL_1_HOST" < "${INCOMINGFILE}"
 fi
-
-echo "Ingesting MySQL File: $MYSQLINPUTFILEPATH"
 
 #cleanup tmp folder
 if [ -d "$TMPFILEFOLDER" ];then
