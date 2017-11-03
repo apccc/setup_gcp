@@ -30,6 +30,10 @@ echo "Downloading ${GCSSOURCEPATH} to ${TMPFILEFOLDER}/";
 gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 
 #locate file from tmp folder
+DOWNLOADEDTMPFILE=`ls -1 "${TMPFILEFOLDER}/"`
+
+FILEEXT="${DOWNLOADEDTMPFILE##*.}"
+echo "File extension found: $FILEEXT"
 
 #extract file from tmp folder
 #tar xf file.tar.gz -C "${DESTINATIONFOLDER}"
@@ -38,7 +42,7 @@ gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 if [ -d "$TMPFILEFOLDER" ];then
   echo "Cleaning up..."
   echo "Removing $TMPFILEFOLDER"
-  #rm -rf "$TMPFILEFOLDER"
+  rm -rf "$TMPFILEFOLDER"
 fi
 
 exit 0
