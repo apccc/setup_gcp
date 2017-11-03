@@ -15,7 +15,11 @@ INCOMINGFILE="$1"
 BASEFILENAME=`basename ${INCOMINGFILE}`
 echo "File found: $BASEFILENAME"
 
+<<<<<<< HEAD
 FILEEXT="${DOWNLOADEDTMPFILE##*.}"
+=======
+FILEEXT="${BASEFILENAME##*.}"
+>>>>>>> 1cc278db454e8757a4e48f47fa9e0184b9ee6bea
 echo "File extension found: $FILEEXT"
 
 
