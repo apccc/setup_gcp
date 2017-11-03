@@ -19,7 +19,7 @@ FILEEXT="${BASEFILENAME##*.}"
 echo "File extension found: $FILEEXT"
 
 TS=`date +%s`
-TMPFILEFOLDER="/tmp/setupgcstrans$TS"
+TMPFILEFOLDER="/tmp/setupmysqlingest$TS"
 
 if [ "$FILEEXT" == 'gz' ];then
   #make tmp folder
