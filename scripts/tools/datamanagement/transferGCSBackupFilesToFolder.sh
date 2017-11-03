@@ -38,7 +38,7 @@ gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 if [ -d "$TMPFILEFOLDER" ];then
   echo "Cleaning up..."
   echo "Removing $TMPFILEFOLDER"
-  rm -rf "$TMPFILEFOLDER"
+  #rm -rf "$TMPFILEFOLDER"
 fi
 
 exit 0
