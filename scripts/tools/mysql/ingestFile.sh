@@ -29,7 +29,8 @@ if [ "$FILEEXT" == 'gz' ];then
     mkdir "$TMPFILEFOLDER"
   fi
 
-  
+  echo "Extracting file ${INCOMINGFILE} to ${TMPFILEFOLDER}"
+  tar xf "${INCOMINGFILE}" -C "${TMPFILEFOLDER}"
 
   #cleanup tmp folder
   if [ -d "$TMPFILEFOLDER" ];then
