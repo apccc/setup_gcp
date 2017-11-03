@@ -31,6 +31,7 @@ gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 
 #locate file from tmp folder
 DOWNLOADEDTMPFILE=`ls -1 "${TMPFILEFOLDER}/"`
+echo "Downloaded file: ${DOWNLOADEDTMPFILE}"
 
 FILEEXT="${DOWNLOADEDTMPFILE##*.}"
 echo "File extension found: $FILEEXT"
