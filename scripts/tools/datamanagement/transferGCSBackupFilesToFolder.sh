@@ -27,7 +27,7 @@ fi
 
 #download to tmp folder
 echo "Downloading ${GCSSOURCEPATH} to ${TMPFILEFOLDER}/";
-#gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
+gsutil cp gs://${GCSSOURCEPATH} "${TMPFILEFOLDER}/"
 
 #locate file from tmp folder
 
@@ -38,7 +38,7 @@ echo "Downloading ${GCSSOURCEPATH} to ${TMPFILEFOLDER}/";
 if [ -d "$TMPFILEFOLDER" ];then
   echo "Cleaning up..."
   echo "Removing $TMPFILEFOLDER"
-  #rm -rf "$TMPFILEFOLDER"
+  rm -rf "$TMPFILEFOLDER"
 fi
 
 exit 0
