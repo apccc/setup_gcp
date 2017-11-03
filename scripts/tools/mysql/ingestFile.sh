@@ -13,8 +13,12 @@ fi
 INCOMINGFILE="$1"
 
 BASEFILENAME=`basename ${INCOMINGFILE}`
+echo "File found: $BASEFILENAME"
+
+FILEEXT="${DOWNLOADEDTMPFILE##*.}"
+echo "File extension found: $FILEEXT"
+
 
 
 echo "Ingesting MySQL File"
-
 exit 0
