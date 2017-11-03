@@ -18,6 +18,8 @@ echo "File found: $BASEFILENAME"
 FILEEXT="${BASEFILENAME##*.}"
 echo "File extension found: $FILEEXT"
 
+if [ "$FILEEXT" == 'gz' ];then
+fi
 
 
 echo "Ingesting MySQL File"
