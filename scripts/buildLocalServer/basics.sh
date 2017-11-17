@@ -7,6 +7,12 @@ echo "****************************************************"
 echo "* Updating apt"
 sudo apt-get update -qq
 
+apt-get install -yqq git
+if [ ! -d "~/github_utils" ];then
+  cd ~
+  git clone https://github.com/apccc/github_utils.git
+fi
+
 echo "* Installing these basic packages:"
 cat ~/setup_gcp/settings/basics.packages.txt
 echo "* Installing with yes set for all answers:"
