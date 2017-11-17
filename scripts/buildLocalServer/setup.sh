@@ -89,4 +89,11 @@ gcloud auth login
 ~/setup_gcp/scripts/buildLocalServer/mysql.sh
 ~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
 ~/setup_gcp/scripts/buildLocalServer/phpMyAdmin.sh
+
+#Output next steps
+source "$F"
+COADURL="https://${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}/"
+echo "Admin URL: ${COADURL}admin/"
+echo "PHPMyAdmin URL: ${COADURL}${PHPMYADMIN_FOLDER}"
+
 exit 0
