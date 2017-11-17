@@ -10,11 +10,14 @@ sudo apt-get update -qq
 echo "* Installing apache2:"
 sudo apt-get install -yqq apache2
 
-echo "* Installing libapache2-mod-php5:"
-sudo apt-get install -yqq libapache2-mod-php5
+echo "* Installing apache2-mod-php7.0:"
+sudo apt-get install -yqq apache2-mod-php7.0
 
-echo "* Installing php5-mysql:"
-sudo apt-get install -yqq php5-mysql
+echo "* Installing php7.0-mysql:"
+sudo apt-get install -yqq php7.0-mysql
+
+echo "* Installing php7.0:"
+sudo apt-get install -yqq php7.0
 
 #clear out existing sites-enabled files
 if [ -d /etc/apache2/sites-enabled ];then
