@@ -51,7 +51,7 @@ if [ ! -f $F ];then
         echo -e '   AddType application/x-font-woff\t\twoff' >> $F
         echo -e '   AddType image/svg+xml\t\t\tsvg svgz' >> $F
         echo '</IfModule>' >> $F
-        echo '<IfModule mod_php5.c>' >> $F
+        echo '<IfModule mod_php7.c>' >> $F
         echo '  php_value short_open_tag 1' >> $F
         echo '</IfModule>' >> $F
         echo ''
