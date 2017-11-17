@@ -76,5 +76,5 @@ fi
 ~/setup_gcp/scripts/buildLocalServer/basics.sh
 ~/setup_gcp/scripts/buildLocalServer/mysql.sh
 ~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
-~//setup_gcp/scripts/buildLocalServer/phpMyAdmin.sh
+~/setup_gcp/scripts/buildLocalServer/phpMyAdmin.sh
 exit 0
