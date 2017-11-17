@@ -95,5 +95,5 @@ source "$F"
 COADURL="https://${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}/"
 echo "Admin URL: ${COADURL}admin/"
 echo "PHPMyAdmin URL: ${COADURL}${PHPMYADMIN_FOLDER}"
-
+echo "Config File: $F"
 exit 0
