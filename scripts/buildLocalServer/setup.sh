@@ -73,6 +73,13 @@ if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
   echo ""
   sed -i -e "s/<<RECAPTCHASECRETKEY>>/${RECAPTCHASECRETKEY}/g" "$F"
 fi
+if [ `grep '<<WHITELISTEDIPS>>' "$F" | wc -l` -gt 0 ];then
+  ZWHITEIP=`sudo netstat -antp | grep ':22' | grep 'ESTABLISHED' | sed 's/\s\s*/ /g' | cut -d' ' -f5 | cut -d':' -f1 | egrep -oe '[0-9]+.[0-9]+.[0-9]+.[0-9]+' | head -n 1`
+  sed -i -e "s/<<WHITELISTEDIPS>>/${ZWHITEIP}/g" "$F"
+  if [ ! -z "$ZWHITEIP" ];then
+    echo " *** Whitelisting connected IP $ZWHITEIP ***"
+  fi
+fi
 
 #Authenticate
 gcloud auth login
