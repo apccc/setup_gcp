@@ -10,3 +10,7 @@ From a New Google Cloud Debian VM with a subdomain DNS pointed at the VM:
 # restore directory from Google Cloud Storage backup
 e.g.:
 ~/setup_gcp/scripts/tools/datamanagement/transferGCSBackupFilesToFolder.sh zstore_subdomain_com_home/7.home.user.tar.gz /home/
+
+# (re)build database from backup
+e.g.:
+~/setup_gcp/scripts/tools/mysql/ingestFile.sh ~/mysql_backup/localhost/dbdump.day.5.sql.gz
