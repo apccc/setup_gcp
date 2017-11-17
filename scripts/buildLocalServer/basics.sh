@@ -7,7 +7,7 @@ echo "****************************************************"
 echo "* Updating apt"
 sudo apt-get update -qq
 
-apt-get install -yqq git
+sudo apt-get install -yqq git
 if [ ! -d "~/github_utils" ];then
   cd ~
   git clone https://github.com/apccc/github_utils.git
