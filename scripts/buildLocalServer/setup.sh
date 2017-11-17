@@ -75,4 +75,5 @@ fi
 #Do the builds
 ~/setup_gcp/scripts/buildLocalServer/basics.sh
 ~/setup_gcp/scripts/buildLocalServer/mysql.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
 exit 0
