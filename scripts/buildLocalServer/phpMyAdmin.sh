@@ -15,11 +15,11 @@ F=/tmp/setup.phpmyadmin.conf
 cp $FORIG $F
 echo " * Configuring \"$FORIG\":"
 $FR 'Alias /phpmyadmin /usr/share/phpmyadmin' "Alias /${PHPMYADMIN_FOLDER} /usr/share/phpmyadmin" $F
-FIND=$(echo -e '<Directory /usr/share/phpmyadmin>\n    Options FollowSymLinks')
-REPLACE=$(echo -e '<Directory /usr/share/phpmyadmin>\n\tOrder deny,allow\n\tDeny from all\n\tOptions FollowSymLinks')
+FIND=$(echo -e '<Directory /usr/share/phpmyadmin>\n    Options')
+REPLACE=$(echo -e '<Directory /usr/share/phpmyadmin>\n\tOrder deny,allow\n\tDeny from all\n\tOptions')
 $FR "$FIND" "$REPLACE" $F
 
-L=`grep -n 'Options FollowSymLinks' $F | cut -d':' -f1`
+L=`grep -n 'Options SymLinksIfOwnerMatch' $F | cut -d':' -f1`
 for X in `echo "$WHITELISTEDIPS" | tr ' ' '\n'`;do
         A=`echo -e "\tAllow from $X"`
         $AP "$A" $F $L
