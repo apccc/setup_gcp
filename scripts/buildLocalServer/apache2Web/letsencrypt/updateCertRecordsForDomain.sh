@@ -47,6 +47,7 @@ if [[ `sudo ls -1 "$F" | wc -l` -gt 0 ]];then
   #COMMAND=`$MY "$CMD"`
   echo " * Putting file in place /root/ssl/$ZDOMAIN/CertificateFile.crt"
   sudo cp "$F" "/root/ssl/$ZDOMAIN/CertificateFile.crt"
+  sudo chmod 600 "/root/ssl/$ZDOMAIN/CertificateFile.crt"
 fi
 
 F="/etc/letsencrypt/live/$ZDOMAIN/privkey.pem"
@@ -56,6 +57,7 @@ if [[ `sudo ls -1 "$F" | wc -l` -gt 0 ]];then
   #COMMAND=`$MY "$CMD"`
   echo " * Putting file in place /root/ssl/$ZDOMAIN/CertificateKey.key"
   sudo cp "$F" "/root/ssl/$ZDOMAIN/CertificateKey.key"
+  sudo chmod 600 "/root/ssl/$ZDOMAIN/CertificateKey.key"
 fi
 
 F="/etc/letsencrypt/live/$ZDOMAIN/chain.pem"
@@ -65,6 +67,7 @@ if [[ `sudo ls -1 "$F" | wc -l` -gt 0 ]];then
   #COMMAND=`$MY "$CMD"`
   echo " * Putting file in place /root/ssl/$ZDOMAIN/CertificateChain.txt"
   sudo cp "$F" "/root/ssl/$ZDOMAIN/CertificateChain.txt"
+  sudo chmod 600 "/root/ssl/$ZDOMAIN/CertificateChain.txt"
 fi
 
 #clean out the source certs
