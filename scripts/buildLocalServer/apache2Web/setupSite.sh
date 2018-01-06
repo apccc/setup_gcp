@@ -26,20 +26,25 @@ if [ -z "$ALLOWOVERRIDE" ];then
   ALLOWOVERRIDE="None"
 fi
 
-#setup the site directory
-D="/var/www/$SUBDOMAIN"
-if [ ! -d "$D" ];then
-  sudo mkdir "$D"
-fi
 #setup the Web files for the site
-if [ ! -d "$D/htdocs" ];then
-  if [ ! -z "${SITETEMPLATE}" ];then
-    X=~/setup_gcp/settings/server/${SITETEMPLATE}SiteTemplate/htdocs
+D="/var/www/$SUBDOMAIN"
+if [ ! -z "${SITETEMPLATE}" ] && [ "${SITETEMPLATE:0:4}" == "git:" ];then
+  $(dirname $0)/setupGitSite.sh "${SITETEMPLATE}"
+else
+  #setup the site directory
+  if [ ! -d "$D" ];then
+    sudo mkdir "$D"
   fi
-  if [ ! -z "${SITETEMPLATE}" ] && [ -d $X ];then
-    sudo rsync -av "$X" "$D/"
-  else
-    sudo mkdir "$D/htdocs"
+  #setup the Web files for the site
+  if [ ! -d "$D/htdocs" ];then
+    if [ ! -z "${SITETEMPLATE}" ];then
+      X=~/setup_gcp/settings/server/${SITETEMPLATE}SiteTemplate/htdocs
+    fi
+    if [ ! -z "${SITETEMPLATE}" ] && [ -d $X ];then
+      sudo rsync -av "$X" "$D/"
+    else
+      sudo mkdir "$D/htdocs"
+    fi
   fi
 fi
 
