@@ -167,7 +167,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'sites';" | tail -n +2 | wc 
   X=$X'`dependencies_repositories` TEXT NOT NULL,'
   X=$X'`dependencies_packages` TEXT NOT NULL,'
   X=$X'`dependencies_commands` TEXT NOT NULL,'
-  X=$X'`template` VARCHAR(50) NOT NULL DEFAULT "default",'
+  X=$X'`template` VARCHAR(150) NOT NULL DEFAULT "default",'
   X=$X'`database` VARCHAR(100) NOT NULL,'
   X=$X'`logo` BLOB NOT NULL,'
   X=$X'`favicon` BLOB NOT NULL,'
