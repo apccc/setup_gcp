@@ -12,6 +12,7 @@ if [ ! -f "$AUTO_PREPEND_FILE" ];then
   echo '<?php' | sudo tee $F > /dev/null
   echo '$MYSQL_USER="'"$MYSQL_WEB_USER"'";' | sudo tee -a $F > /dev/null
   echo '$MYSQL_PASS="'"$MYSQL_WEB_USER_PASS"'";' | sudo tee -a $F > /dev/null
+  echo '?>' | sudo tee -a $F > /dev/null
 fi
 
 #perform updates on php.ini file
