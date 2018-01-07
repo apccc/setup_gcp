@@ -14,7 +14,6 @@ echo '<?php' | sudo tee "$F" > /dev/null
 echo '$COMPANY_NAME="'"$COMPANY_NAME"'";' | sudo tee -a "$F" > /dev/null
 echo '$COMPANY_DOMAIN="'"$COMPANY_DOMAIN"'";' | sudo tee -a "$F" > /dev/null
 echo '$COMPANY_ADMIN_SUBDOMAIN="'"$COMPANY_ADMIN_SUBDOMAIN"'";' | sudo tee -a "$F" > /dev/null
-echo '$SYSTEM_DATABASE="'"$SYSTEM_DATABASE"'";' | sudo tee -a "$F" > /dev/null
 echo '$SITE_PROTOCOL="https";' | sudo tee -a "$F" > /dev/null
 echo '$SITE_CONTROL_DOMAIN="'"$COMPANY_ADMIN_SUBDOMAIN"'.'"$COMPANY_DOMAIN"'";' | sudo tee -a "$F" > /dev/null
 echo '$SITE_TOS_URL="'"$SITE_TOS_URL"'";' | sudo tee -a "$F" > /dev/null
