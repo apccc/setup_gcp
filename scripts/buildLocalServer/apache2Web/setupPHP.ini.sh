@@ -8,7 +8,10 @@ echo " * Configuring php.ini"
 
 #setup the auto_prepend_file
 if [ ! -f "$AUTO_PREPEND_FILE" ];then
-  
+  F="$AUTO_PREPEND_FILE"
+  echo '<?php' | sudo tee $F > /dev/null
+  echo '$MYSQL_USER="'"$MYSQL_WEB_USER"'";' | sudo tee -a $F > /dev/null
+  echo '$MYSQL_PASS="'"$MYSQL_WEB_USER_PASS"'";' | sudo tee -a $F > /dev/null
 fi
 
 $FR "auto_prepend_file =" "auto_prepend_file = $AUTO_PREPEND_FILE" "$PHPINI"
