@@ -14,5 +14,10 @@ if [ ! -f "$AUTO_PREPEND_FILE" ];then
   echo '$MYSQL_PASS="'"$MYSQL_WEB_USER_PASS"'";' | sudo tee -a $F > /dev/null
 fi
 
-$FR "auto_prepend_file =" "auto_prepend_file = $AUTO_PREPEND_FILE" "$PHPINI"
+#perform updates on php.ini file
+TMPFILE=/tmp/setupphpini.txt
+cp "$PHPINI" "$TMPFILE"
+$FR "auto_prepend_file =" "auto_prepend_file = $AUTO_PREPEND_FILE" "$TMPFILE"
+sudo cp "$TMPFILE" "$PHPINI"
+rm "$TMPFILE"
 exit 0
