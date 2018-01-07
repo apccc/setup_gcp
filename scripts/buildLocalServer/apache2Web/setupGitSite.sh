@@ -24,5 +24,31 @@ if [ -z "$GITREPO" ];then
   exit
 fi
 
+#check if target exists already
+D="/var/www/${GITREPO}"
+if [[ `ls -l "$D" 2>/dev/null | wc -l` -gt 0 ]];then
+  echo " * $D already exists! Checking for updates..."
+  cd "$D"
+  ~/github_utils/repo_pull.sh
+else
+  echo " * $D not found! Trying to clone..."
+  HOLDERD=~/setup-config/setup_gcp/git_sites
+  if [ ! -d $HOLDERD ];then
+    echo " * Making directory $HOLDERD"
+    mkdir $HOLDERD
+  fi
+  cd $HOLDERD/
+  if [ -d $HOLDERD/$GITREPO ];then
+    echo " * Directory $HOLDERD/$GITREPO exists! Checking for updates..."
+    cd $HOLDERD/$GITREPO
+    ~/github_utils/repo_pull.sh
+  else
+    echo " * Cloning "${GITORG}/${GITREPO}" to ${HOLDERD}/${GITREPO}..."
+    ~/github_utils/repo_clone.sh "$GITORG" "$GITREPO"
+  fi
+  H=`echo ~`
+  echo " * Creating site file link at /var/www/$GITREPO"
+  sudo ln -s $H/setup-config/setup_gcp/git_sites/$GITREPO/ /var/www/
+fi
 
 exit 0
