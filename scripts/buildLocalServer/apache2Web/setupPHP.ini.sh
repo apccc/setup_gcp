@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/setup-config/setup_gcp/core.sh
 
-PHPINI="/etc/php/7.0/apache2/php.ini"
+PHPINI=`sudo find /etc/ -name "php.ini" | grep 'apache' | head -n 1`
 AUTO_PREPEND_FILE="/var/www/auto_preprend_file.php"
 
 if [ ! -f "$PHPINI" ];then
