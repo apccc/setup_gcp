@@ -26,6 +26,7 @@ if [ -d /etc/apache2/sites-enabled ];then
 fi
 
 ~/setup_gcp/scripts/buildLocalServer/apache2Web/setupExtrasetup.conf.sh
+~/setup_gcp/scripts/buildLocalServer/apache2Web/setupPHP.ini.sh
 ~/setup_gcp/scripts/buildLocalServer/apache2Web/setupDefaultSite.sh
 ~/setup_gcp/scripts/buildLocalServer/apache2Web/setupServerSites.sh
 
