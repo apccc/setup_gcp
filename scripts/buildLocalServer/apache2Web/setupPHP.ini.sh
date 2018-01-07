@@ -4,6 +4,11 @@ source ~/setup-config/setup_gcp/core.sh
 PHPINI="/etc/php/7.0/apache2/php.ini"
 AUTO_PREPEND_FILE="/var/www/auto_preprend_file.php"
 
+if [ ! -f "$PHPINI" ];then
+  echo "Error: Could not find php.ini at $PHPINI"
+  exit 1
+fi
+
 echo " * Configuring php.ini"
 
 #setup the auto_prepend_file
