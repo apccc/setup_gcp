@@ -4,8 +4,11 @@
 
 if [ ! -z "$1" ] && [ "$1" == "open" ];then
   BINDADDRESS='*'
-else
+elif [ ! -z "$1" ] && [ "$1" == "close" ];then
   BINDADDRESS='127.0.0.1'
+else
+  echo "No network setting set!"
+  exit 1
 fi
 
 F="/etc/mysql/setup.conf.d/networking.cnf"
