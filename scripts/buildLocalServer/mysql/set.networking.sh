@@ -8,10 +8,13 @@ else
   BINDADDRESS='127.0.0.1'
 fi
 
-echo "Setting bind-address to $BINDADDRESS"
+echo " * Setting bind-address to $BINDADDRESS"
+
+#make sure the setup.conf.d directory is setup
+~/setup_gcp/scripts/buildLocalServer/mysql/setup.conf.d.sh
 
 F="/etc/mysql/setup.conf.d/networking.cnf"
-"[mysqld]"
-"bind-address=$BINDADDRESS"
+echo "[mysqld]" | sudo tee "$F" > /dev/null
+echo "bind-address=$BINDADDRESS" | sudo tee -a "$F" > /dev/null
 
 exit 0
