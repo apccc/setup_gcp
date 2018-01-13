@@ -19,6 +19,7 @@ if [ ! -f "$F" ];then
   ~/setup_gcp/scripts/buildLocalServer/mysql/set.replication.server.sh
 fi
 
+#create user, if does not exist
 if [ ! -z "${MYSQL_REPLIC_USER}" ] && [[ `$MY "SELECT User FROM mysql.user WHERE User='${MYSQL_REPLIC_USER}'" | wc -l` -lt 1 ]];then
   echo " * Replication user not found, will try to create!"
   $MY "GRANT REPLICATION SLAVE ON *.* TO '${MYSQL_REPLIC_USER}'@'%' IDENTIFIED BY '${MYSQL_REPLIC_PASS}'"
