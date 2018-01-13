@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ~/setup-config/setup_gcp/core.sh
-
 #setup the setup.conf.d directory (if necessary)
 D="/etc/mysql/setup.conf.d"
 
