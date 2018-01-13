@@ -47,6 +47,10 @@ if [ `grep '<<MYSQLWEBUSERPASS>>' "$F" | wc -l` -gt 0 ];then
   MYSQLWEBUSERPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   sed -i -e "s/<<MYSQLWEBUSERPASS>>/${MYSQLWEBUSERPASS}/g" "$F"
 fi
+if [ `grep '<<MYSQLREPLICPASS>>' "$F" | wc -l` -gt 0 ];then
+  MYSQLREPLICPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  sed -i -e "s/<<MYSQLREPLICPASS>>/${MYSQLREPLICPASS}/g" "$F"
+fi
 if [ `grep '<<PHPMYADMINFOLDER>>' "$F" | wc -l` -gt 0 ];then
   PHPMYADMINFOLDER=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   sed -i -e "s/<<PHPMYADMINFOLDER>>/${PHPMYADMINFOLDER}/g" "$F"
