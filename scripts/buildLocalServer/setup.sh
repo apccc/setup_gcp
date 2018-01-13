@@ -89,16 +89,35 @@ fi
 #Authenticate
 gcloud auth login
 
-#Do the builds
+#Do basic install
 ~/setup_gcp/scripts/buildLocalServer/basics.sh
-~/setup_gcp/scripts/buildLocalServer/mysql.sh
-~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
-~/setup_gcp/scripts/buildLocalServer/phpMyAdmin.sh
 
-#Output next steps
+#Include variables from config file
 source "$F"
-COADURL="https://${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}/"
-echo "Admin URL: ${COADURL}admin/"
-echo "PHPMyAdmin URL: ${COADURL}${PHPMYADMIN_FOLDER}"
+
+#Do the builds
+#Database
+echo " * Install Local Database? (y/n)"
+read X
+if [[ "$X" == "y" ]];then
+  ~/setup_gcp/scripts/buildLocalServer/mysql.sh
+fi
+#Web Server
+echo " * Install Local Web Server? (y/n)"
+read X
+if [[ "$X" == "y" ]];then
+  ~/setup_gcp/scripts/buildLocalServer/apache2Web.sh
+  #Output next steps
+  COADURL="https://${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}/"
+  echo " * Admin URL: ${COADURL}admin/"
+  #PHPMyAdmin
+  echo " * Install Local PHPMyAdmin? (y/n)"
+  read X
+  if [[ "$X" == "y" ]];then
+    ~/setup_gcp/scripts/buildLocalServer/phpMyAdmin.sh
+    echo " * PHPMyAdmin URL: ${COADURL}${PHPMYADMIN_FOLDER}"
+  fi
+fi
+
 echo "Config File: $F"
 exit 0
