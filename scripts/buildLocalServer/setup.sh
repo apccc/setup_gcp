@@ -11,6 +11,7 @@ F=~/setup-config/setup_gcp/core.sh
 if [ ! -f ~/setup-config/setup_gcp/core.sh ];then
  echo "Setting up core settings file."
  cp ~/setup_gcp/settings/core.template.sh $F
+ chmod 600 $F
 fi
 #Setup company info
 if [ `grep '<<COMPANYNAME>>' "$F" | wc -l` -gt 0 ];then
