@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #setup the setup.conf.d directory (if necessary)
+source ~/setup-config/setup_gcp/core.sh
+
 D="/etc/mysql/setup.conf.d"
 
 if [ ! -d "$D" ];then
