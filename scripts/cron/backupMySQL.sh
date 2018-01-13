@@ -49,8 +49,7 @@ else
     BACKUPFILE="${DAILYBACKUPPATH}"
   fi
   echo " * BACKING UP TO: $BACKUPFILE"
-  #removed --master-data as there's no master slave replication right now
-  (mysql -u $MUSER -h $MHOST -p$MPASS -e 'SHOW SLAVE STATUS' | sed 's/^/-- /' && echo "$DATABASES" | xargs mysqldump --default-character-set=utf8mb4 -u $MUSER -h $MHOST -p$MPASS --databases) | gzip -9 > "$BACKUPFILE"
+  (mysql -u $MUSER -h $MHOST -p$MPASS -e 'SHOW MASTER STATUS;SHOW SLAVE STATUS' | sed 's/^/-- /' && echo "$DATABASES" | xargs mysqldump --default-character-set=utf8mb4 -u $MUSER -h $MHOST -p$MPASS --databases) | gzip -9 > "$BACKUPFILE"
 
 #        echo "STARTING SLAVE"
 #        mysql -u $MUSER -h $MHOST -p$MPASS -e 'START SLAVE' 2>/dev/null
