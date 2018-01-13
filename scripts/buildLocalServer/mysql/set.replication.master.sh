@@ -2,6 +2,8 @@
 
 #set the database server to act as a replication master
 
+source ~/setup-config/setup_gcp/core.sh
+
 #begin setting up the replication master
 F='/etc/mysql/setup.conf.d/replicationmaster.cnf'
 if [ ! -f "$F" ];then
@@ -14,6 +16,12 @@ if [ ! -f "$F" ];then
   echo "log-bin" | sudo tee -a "$F" > /dev/null
   SERVERID=`echo $((1 + RANDOM % 1000000))`
   echo "server_id=$SERVERID" | sudo tee -a "$F" > /dev/null
+fi
+
+if [ ! -z "${MYSQL_REPLIC_USER}" ] && [[ `$MY "SELECT User FROM mysql.user WHERE User='${MYSQL_REPLIC_USER}'" | wc -l` -lt 1 ]];then
+  echo " * Replication user not found, will try to create!"
+  $MY "GRANT REPLICATION SLAVE ON *.* TO '${MYSQL_REPLIC_USER}'@'%' IDENTIFIED BY '${MYSQL_REPLIC_PASS}'"
+  $MY "FLUSH PRIVILEGES"
 fi
 
 exit 0
