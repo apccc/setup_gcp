@@ -35,9 +35,7 @@ if [ `grep '<<COMPANYSYSADMINEMAIL>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<COMPANYSYSADMINEMAIL>>/${COMPANYSYSADMINEMAIL}/g" "$F"
 fi
 if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Admin Password: "
-  read -s SYSADMININITPASSWORD
-  echo ""
+  SYSADMININITPASSWORD=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   sed -i -e "s/<<SYSADMININITPASSWORD>>/${SYSADMININITPASSWORD}/g" "$F"
 fi
 if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
