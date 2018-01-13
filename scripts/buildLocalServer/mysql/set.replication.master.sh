@@ -14,8 +14,9 @@ if [ ! -f "$F" ];then
   echo " * Creating $F"
   echo "[mysqld]" | sudo tee "$F" > /dev/null
   echo "log-bin" | sudo tee -a "$F" > /dev/null
-  SERVERID=`echo $((1 + RANDOM % 1000000))`
-  echo "server_id=$SERVERID" | sudo tee -a "$F" > /dev/null
+
+  #setup as replication member server
+  ~/setup_gcp/scripts/buildLocalServer/mysql/set.replication.server.sh
 fi
 
 if [ ! -z "${MYSQL_REPLIC_USER}" ] && [[ `$MY "SELECT User FROM mysql.user WHERE User='${MYSQL_REPLIC_USER}'" | wc -l` -lt 1 ]];then
