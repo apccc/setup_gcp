@@ -366,7 +366,7 @@ fi
 
 
 #create Google Cloud Compute Engine Service Account Scopes table
-if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_VMInstances';" | tail -n +2 | wc -l` -lt 1 ]];then
+if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_ServiceAccountScopes';" | tail -n +2 | wc -l` -lt 1 ]];then
   X='CREATE TABLE IF NOT EXISTS `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_ServiceAccountScopes` ('
   X=$X'`id` int(10) unsigned NOT NULL,'
   X=$X'`service` varchar(50) COLLATE utf8_unicode_ci NOT NULL,'
