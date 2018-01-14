@@ -40,7 +40,7 @@ else
 #  echo "STOPPING SLAVE"
 #  mysql -u $MUSER -h $MHOST -p$MPASS -e 'STOP SLAVE' 2>/dev/null
 
-  DATABASES=`mysql -N -u $MUSER -h $MHOST -p$MPASS -e 'SHOW DATABASES' | egrep -v 'information_schema|performance_schema'`
+  DATABASES=`mysql -N -u $MUSER -h $MHOST -p$MPASS -e 'SHOW DATABASES' | egrep -v 'information_schema|mysql|performance_schema'`
   if [ ! -f "${YEARLYBACKUPPATH}" ];then
     BACKUPFILE="${YEARLYBACKUPPATH}"
 #       elif [ ! -f "${MONTHLYBACKUPPATH}" ];then
