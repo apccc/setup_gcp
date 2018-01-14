@@ -35,9 +35,10 @@ class database_mysqli_local extends database_tools
 		$this->masterLink=true;
 		global $MYSQL_USER;
 		global $MYSQL_PASS;
+		global $MYSQL_1_HOST;
 		$DBu=$MYSQL_USER;
 		$DBp=$MYSQL_PASS;
-		$DBh='localhost';
+		$DBh=(empty($MYSQL_1_HOST)?'localhost':$MYSQL_1_HOST);
 		if(!$this->mysqlidb=new database_mysqli($DBh,$DBu,$DBp))
 		{
 			$this->masterLink=false;
