@@ -23,7 +23,7 @@ echo "[mysqld]" | sudo tee "$CONFIGFILEPATH" > /dev/null
 
 replicate-wild-do-table=setup_system.%
 #loop through databases in backup file
-for D in `zcat "$F" | egrep -e '^CREATE DATABASE' | egrep -oe '`[a-zA-Z0-9_]*`' | egrep -oe '[a-zA-Z0-9_]*'`;do
+for D in $(zcat "$F" | egrep -e '^CREATE DATABASE' | egrep -oe '`[a-zA-Z0-9_]*`' | egrep -oe '[a-zA-Z0-9_]*');do
   echo "replicate-wild-do-table=${D}.%" | sudo tee -a "$CONFIGFILEPATH" > /dev/null
 done
 
