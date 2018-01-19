@@ -2,6 +2,8 @@
 
 #build a local MySQL slave from master backup file
 
+
+
 #turn off external connections while we work
 
 #turn off any existing slave working
