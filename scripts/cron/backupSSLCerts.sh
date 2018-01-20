@@ -15,6 +15,7 @@ if [ ! -d $SSLBACKUPPATH ];then
 fi
 
 #sync the data
+echo " * Backing up SSL Certs to ${SSLBACKUPPATH}"
 sudo rsync -a /root/ssl/ ${SSLBACKUPPATH}/
 
 #set the user
