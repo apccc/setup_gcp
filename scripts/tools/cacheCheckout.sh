@@ -27,7 +27,7 @@ fi
 DAYS=`echo "$2" | egrep -oe '[0-9]*' | head -n 1`
 
 #help cleanup
-$MY "DELETE FROM ${SYSTEM_DATABASE}.cache WHERE expires <= NOW() LIMIT 10000"
+$MY "DELETE FROM ${SYSTEM_DATABASE}.cache WHERE expires <= NOW() LIMIT 1000"
 
 #fail if there is an existing entry, otherwise store and output okay
 if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | wc -l` -gt 0 ]];then
