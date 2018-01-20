@@ -11,6 +11,9 @@ if [ -z "$KEY" ];then
   echo " * Error: cacheCheckout - Bad key provided!"
   exit 1
 fi
+
+source ~/setup-config/setup_gcp/core.sh
+
 #only a key provided, try to output the data
 if [ -z "$2" ];then
   $MY "SELECT data FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | tail -n +2 | base64 -d
@@ -22,8 +25,6 @@ if [ ! -z "$2" ] && [ -z "$3" ];then
 fi
 
 DAYS=`echo "$2" | egrep -oe '[0-9]*' | head -n 1`
-
-source ~/setup-config/setup_gcp/core.sh
 
 #help cleanup
 $MY "DELETE FROM ${SYSTEM_DATABASE}.cache WHERE expires <= NOW() LIMIT 10000"
