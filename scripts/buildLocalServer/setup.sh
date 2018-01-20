@@ -38,6 +38,14 @@ if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
   SYSADMININITPASSWORD=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   sed -i -e "s/<<SYSADMININITPASSWORD>>/${SYSADMININITPASSWORD}/g" "$F"
 fi
+if [ `grep '<<MYSQL1HOST>>' "$F" | wc -l` -gt 0 ];then
+  echo -n " * Enter the MySQL Host (default is localhost): "
+  read MYSQL1HOST
+  if [ -z "$MYSQL1HOST" ];then
+    MYSQL1HOST='localhost'
+  fi
+  sed -i -e "s/<<MYSQL1HOST>>/${MYSQL1HOST}/g" "$F"
+fi
 if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
   MYSQLROOTPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   sed -i -e "s/<<MYSQLROOTPASS>>/${MYSQLROOTPASS}/g" "$F"
