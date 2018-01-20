@@ -19,11 +19,14 @@ if [ -z "$2" ];then
   $MY "SELECT data FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | tail -n +2 | base64 -d
   exit 0
 fi
+
+#if two variables given, we must have a third
 if [ ! -z "$2" ] && [ -z "$3" ];then
   echo " * Error: cacheCheckout - No data provided!"
   exit 1
 fi
 
+#filter days variable
 DAYS=`echo "$2" | egrep -oe '[0-9]*' | head -n 1`
 
 #help cleanup
