@@ -23,6 +23,7 @@ G=`id -g`
 sudo chown -R $U:$G ${SSLBACKUPPATH}
 
 #set the permissions
-sudo chmod -R 600 ${SSLBACKUPPATH}
+chmod -R 600 ${SSLBACKUPPATH}
+chmod -R u+X ${SSLBACKUPPATH}
 
 exit 0
