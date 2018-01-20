@@ -15,27 +15,27 @@ if [ ! -f ~/setup-config/setup_gcp/core.sh ];then
 fi
 #Setup company info
 if [ `grep '<<COMPANYNAME>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Company Name: "
+  echo -n " * Company Name (e.g. ACME Inc.): "
   read COMPANYNAME
   sed -i -e "s/<<COMPANYNAME>>/${COMPANYNAME}/g" "$F"
 fi
 if [ `grep '<<COMPANYDOMAIN>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Company Domain (e.g. example.com): "
+  echo -n " * Company Domain (e.g. example.com): "
   read COMPANYDOMAIN
   sed -i -e "s/<<COMPANYDOMAIN>>/${COMPANYDOMAIN}/g" "$F"
 fi
 if [ `grep '<<COMPANYADMINSUBDOMAIN>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Company Admin SubDomain (e.g. admin): "
+  echo -n " * Company Admin Subdomain (e.g. admin): "
   read COMPANYADMINSUBDOMAIN
   sed -i -e "s/<<COMPANYADMINSUBDOMAIN>>/${COMPANYADMINSUBDOMAIN}/g" "$F"
 fi
 if [ `grep '<<COMPANYSYSADMINEMAIL>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Admin Email (e.g. admin@example.com): "
+  echo -n " * Admin Email (e.g. admin@example.com): "
   read COMPANYSYSADMINEMAIL
   sed -i -e "s/<<COMPANYSYSADMINEMAIL>>/${COMPANYSYSADMINEMAIL}/g" "$F"
 fi
 if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the Admin Pass (leave blank to auto-generate): "
+  echo -n " * Admin Pass (leave blank to auto-generate): "
   read SYSADMININITPASSWORD
   if [ -z "$SYSADMININITPASSWORD" ];then
     SYSADMININITPASSWORD=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
@@ -43,7 +43,7 @@ if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<SYSADMININITPASSWORD>>/${SYSADMININITPASSWORD}/g" "$F"
 fi
 if [ `grep '<<MYSQL1HOST>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the MySQL Host (leave blank for localhost): "
+  echo -n " * MySQL Host (leave blank for localhost): "
   read MYSQL1HOST
   if [ -z "$MYSQL1HOST" ];then
     MYSQL1HOST='localhost'
@@ -51,7 +51,7 @@ if [ `grep '<<MYSQL1HOST>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<MYSQL1HOST>>/${MYSQL1HOST}/g" "$F"
 fi
 if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the MySQL Root Pass (leave blank to auto-generate): "
+  echo -n " * MySQL Root Pass (leave blank to auto-generate): "
   read MYSQLROOTPASS
   if [ -z "$MYSQLROOTPASS" ];then
     MYSQLROOTPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
@@ -59,7 +59,7 @@ if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<MYSQLROOTPASS>>/${MYSQLROOTPASS}/g" "$F"
 fi
 if [ `grep '<<MYSQLWEBUSERPASS>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the MySQL Web Pass (leave blank to auto-generate): "
+  echo -n " * MySQL Web Pass (leave blank to auto-generate): "
   read MYSQLWEBUSERPASS
   if [ -z "$MYSQLWEBUSERPASS" ];then
     MYSQLWEBUSERPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
@@ -67,12 +67,21 @@ if [ `grep '<<MYSQLWEBUSERPASS>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<MYSQLWEBUSERPASS>>/${MYSQLWEBUSERPASS}/g" "$F"
 fi
 if [ `grep '<<MYSQLREPLICPASS>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the MySQL Replication Pass (leave blank to auto-generate): "
+  echo -n " * MySQL Replication Pass (leave blank to auto-generate): "
   read MYSQLREPLICPASS
   if [ -z "$MYSQLREPLICPASS" ];then
     MYSQLREPLICPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
   fi
   sed -i -e "s/<<MYSQLREPLICPASS>>/${MYSQLREPLICPASS}/g" "$F"
+fi
+if [ `grep '<<SYSTEMDATABASE>>' "$F" | wc -l` -gt 0 ];then
+  echo -n " * Setup System Database Name (leave blank for setup_system): "
+  read SYSTEMDATABASE
+  if [ -z "$SYSTEMDATABASE" ];then
+    SYSTEMDATABASE='setup_system'
+  fi
+  SYSTEMDATABASE=`echo "$SYSTEMDATABASE" | egrep -oe '[a-zA-Z0-9_]*' | head -n 1`
+  sed -i -e "s/<<SYSTEMDATABASE>>/${SYSTEMDATABASE}/g" "$F"
 fi
 if [ `grep '<<PHPMYADMINFOLDER>>' "$F" | wc -l` -gt 0 ];then
   PHPMYADMINFOLDER=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
