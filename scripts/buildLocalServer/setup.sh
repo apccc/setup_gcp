@@ -35,11 +35,15 @@ if [ `grep '<<COMPANYSYSADMINEMAIL>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<COMPANYSYSADMINEMAIL>>/${COMPANYSYSADMINEMAIL}/g" "$F"
 fi
 if [ `grep '<<SYSADMININITPASSWORD>>' "$F" | wc -l` -gt 0 ];then
-  SYSADMININITPASSWORD=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  echo -n " * Enter the Admin Pass (leave blank to auto-generate): "
+  read SYSADMININITPASSWORD
+  if [ -z "$SYSADMININITPASSWORD" ];then
+    SYSADMININITPASSWORD=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  fi
   sed -i -e "s/<<SYSADMININITPASSWORD>>/${SYSADMININITPASSWORD}/g" "$F"
 fi
 if [ `grep '<<MYSQL1HOST>>' "$F" | wc -l` -gt 0 ];then
-  echo -n " * Enter the MySQL Host (default is localhost): "
+  echo -n " * Enter the MySQL Host (leave blank for localhost): "
   read MYSQL1HOST
   if [ -z "$MYSQL1HOST" ];then
     MYSQL1HOST='localhost'
@@ -47,15 +51,27 @@ if [ `grep '<<MYSQL1HOST>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<MYSQL1HOST>>/${MYSQL1HOST}/g" "$F"
 fi
 if [ `grep '<<MYSQLROOTPASS>>' "$F" | wc -l` -gt 0 ];then
-  MYSQLROOTPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  echo -n " * Enter the MySQL Root Pass (leave blank to auto-generate): "
+  read MYSQLROOTPASS
+  if [ -z "$MYSQLROOTPASS" ];then
+    MYSQLROOTPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  fi
   sed -i -e "s/<<MYSQLROOTPASS>>/${MYSQLROOTPASS}/g" "$F"
 fi
 if [ `grep '<<MYSQLWEBUSERPASS>>' "$F" | wc -l` -gt 0 ];then
-  MYSQLWEBUSERPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  echo -n " * Enter the MySQL Web Pass (leave blank to auto-generate): "
+  read MYSQLWEBUSERPASS
+  if [ -z "$MYSQLWEBUSERPASS" ];then
+    MYSQLWEBUSERPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  fi
   sed -i -e "s/<<MYSQLWEBUSERPASS>>/${MYSQLWEBUSERPASS}/g" "$F"
 fi
 if [ `grep '<<MYSQLREPLICPASS>>' "$F" | wc -l` -gt 0 ];then
-  MYSQLREPLICPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  echo -n " * Enter the MySQL Replication Pass (leave blank to auto-generate): "
+  read MYSQLREPLICPASS
+  if [ -z "$MYSQLREPLICPASS" ];then
+    MYSQLREPLICPASS=`tr -cd [:alnum:] < /dev/urandom | head -c 16`
+  fi
   sed -i -e "s/<<MYSQLREPLICPASS>>/${MYSQLREPLICPASS}/g" "$F"
 fi
 if [ `grep '<<PHPMYADMINFOLDER>>' "$F" | wc -l` -gt 0 ];then
