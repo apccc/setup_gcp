@@ -33,7 +33,10 @@ $MY "DELETE FROM ${SYSTEM_DATABASE}.cache WHERE expires <= NOW() LIMIT 1000"
 if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | wc -l` -gt 0 ]];then
   echo 'fail'
 else
-  $MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo "$3" | base64)"')"
+  if [ `$MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo "$3" | base64)"')" 2>&1 | grep Duplicate | wc -l` -gt 0 ];then
+    echo 'fail'
+    exit
+  fi
   echo 'ok'
 fi
 
