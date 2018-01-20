@@ -7,7 +7,8 @@ fi
 
 source ~/setup-config/setup_gcp/core.sh
 
-~/setup_gcp/scripts/cron/backupMySQL.sh 
+~/setup_gcp/scripts/cron/backupMySQL.sh
+~/setup_gcp/scripts/cron/backupSSLCerts.sh
 crontab -l > ~/crontab.out.txt
 
 GSUTIL=`which gsutil`
