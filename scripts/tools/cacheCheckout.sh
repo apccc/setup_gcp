@@ -24,7 +24,7 @@ source ~/setup-config/setup_gcp/core.sh
 if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | wc -l` -gt 0 ]];then
   echo 'fail'
 else
-  $MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo $3 | base64)"')"
+  $MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo "$3" | base64)"')"
   echo 'ok'
 fi
 
