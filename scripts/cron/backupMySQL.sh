@@ -37,10 +37,22 @@ else
 #       MONTHLYBACKUPPATH="$BACKUPFOLDER/dbdump.month.$MONTH.sql.gz"
   DAILYBACKUPPATH="$BACKUPFOLDER/dbdump.day.$DAYOFTHEWEEK.sql.gz"
 
-#  echo "STOPPING SLAVE"
-#  mysql -u $MUSER -h $MHOST -p$MPASS -e 'STOP SLAVE' 2>/dev/null
+  #determine if the server is a replication slave
+  MYSQLSLAVE=0
+  if [ `mysql -u $MUSER -h $MHOST -p$MPASS -e 'SHOW SLAVE STATUS' | grep 'Yes' | wc -l` -gt 0 ];then
+    MYSQLSLAVE=1
+  fi
 
+  #if this is a replication slave, then stop it
+  if [ $MYSQLSLAVE -eq 1 ];then
+    echo " * STOPPING SLAVE"
+    mysql -u $MUSER -h $MHOST -p$MPASS -e 'STOP SLAVE' 2>/dev/null
+  fi
+
+  #get databases to backup
   DATABASES=`mysql -N -u $MUSER -h $MHOST -p$MPASS -e 'SHOW DATABASES' | egrep -v 'information_schema|mysql|performance_schema'`
+
+  #determine backup file to save to
   if [ ! -f "${YEARLYBACKUPPATH}" ];then
     BACKUPFILE="${YEARLYBACKUPPATH}"
 #       elif [ ! -f "${MONTHLYBACKUPPATH}" ];then
@@ -48,11 +60,16 @@ else
   else
     BACKUPFILE="${DAILYBACKUPPATH}"
   fi
+
+  #perform the backup operation
   echo " * BACKING UP TO: $BACKUPFILE"
   (mysql -u $MUSER -h $MHOST -p$MPASS -e 'SHOW MASTER STATUS;SHOW SLAVE STATUS' | sed 's/^/-- /' && echo "$DATABASES" | xargs mysqldump --default-character-set=utf8mb4 -u $MUSER -h $MHOST -p$MPASS --single-transaction --databases) | gzip -9 > "$BACKUPFILE"
 
-#        echo "STARTING SLAVE"
-#        mysql -u $MUSER -h $MHOST -p$MPASS -e 'START SLAVE' 2>/dev/null
+  #if this is a replication slave, then start it
+  if [ $MYSQLSLAVE -eq 1 ];then
+    echo " * STARTING SLAVE"
+    mysql -u $MUSER -h $MHOST -p$MPASS -e 'START SLAVE' 2>/dev/null
+  fi
 fi
 
 exit 0
