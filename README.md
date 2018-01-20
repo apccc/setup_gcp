@@ -14,3 +14,6 @@ e.g.:
 # (re)build database from backup
 e.g.:
 ~/setup_gcp/scripts/tools/mysql/ingestFile.sh ~/mysql_backup/localhost/dbdump.day.5.sql.gz
+
+# build local slave from master backup file
+~/setup_gcp/scripts/tools/mysql/buildLocalSlaveFromMasterBackupFile.sh ~/dbdump.day.5.sql.gz
