@@ -295,15 +295,20 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_buckets'
   X=$X'VALUES ("'"$BID"'","'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
   $MY "$X"
   gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
-
-  BID="2"
-  BNAME="zstore_${STORAGE_IDENTIFIER}_home"
+fi
+HOMEBNAME="zstore_${STORAGE_IDENTIFIER}_home"
+HOMEBID=`$MY "SELECT (max(id)+1) AS z FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets" | tail -n 1`
+if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE server='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
+  BID=$HOMEBID
+  BNAME=$HOMEBNAME
   BCLASS="DURABLE_REDUCED_AVAILABILITY"
   BLOCATION="US"
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_buckets` (`id`,`name`,`storageClass`,`bucketLocation`) '
   X=$X'VALUES ("'"$BID"'","'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
   $MY "$X"
   gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
+else
+  HOMEBID=0
 fi
 
 
@@ -330,9 +335,10 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_backupSc
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
   X=$X'VALUES ("'"$(hostname)"'","/var/www","1",NOW());'
   $MY "$X"
-
+fi
+if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_backupSchedule WHERE server='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
-  X=$X'VALUES ("'"$(hostname)"'","/home","2",NOW());'
+  X=$X'VALUES ("'"$(hostname)"'","/home","$HOMEBID",NOW());'
   $MY "$X"
 fi
 
@@ -358,7 +364,8 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_VMInsta
 
   X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
   $MY "$X"
-
+fi
+if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleComputeEngine_VMInstances WHERE name='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` (`name`,`zone`,`region`,`machine_type`,`ip`,`active`) '
   X=$X'VALUES ("'"$(hostname)"'","'"$(~/setup_gcp/settings/get/gcloud/zone.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/region.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/machine-type.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/ip.sh)"'","T");'
   $MY "$X"
@@ -393,9 +400,6 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_Service
   X=$X"(8, 'Google App Engine Task Queue', 'https://www.googleapis.com/auth/taskqueue', 'taskqueue', 'Access to Google App Engine Task Queue API');"
   $MY "$X"
 fi
-
-
-
 
 
 echo " * Done setting up database for default Web site"
