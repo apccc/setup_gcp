@@ -16,12 +16,12 @@ mysqlPass=`~/setup_gcp/settings/get/mysql_r_pw.sh`
 INCOMINGFILE="$1"
 
 BASEFILENAME=`basename ${INCOMINGFILE}`
-echo "File found: $BASEFILENAME"
+echo " * File found to ingest: $BASEFILENAME"
 
 FILEEXT="${BASEFILENAME##*.}"
-echo "File extension found: $FILEEXT"
+echo " * File extension found: $FILEEXT"
 
-echo "Ingesting File to MySQL: $INCOMINGFILE"
+echo " * Ingesting File to MySQL: $INCOMINGFILE"
 if [ "$FILEEXT" == 'gz' ];then
   zcat "$INCOMINGFILE" | mysql -u root -p$mysqlPass --host "$MYSQL_1_HOST"
 else
