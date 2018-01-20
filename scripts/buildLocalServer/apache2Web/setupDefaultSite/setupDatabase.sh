@@ -208,14 +208,14 @@ fi
 if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'cache';" | tail -n +2 | wc -l` -lt 1 ]];then
   X='CREATE TABLE IF NOT EXISTS `'"${SYSTEM_DATABASE}"'`.`cache` ('
   X=$X'`id` bigint(20) unsigned NOT NULL,'
-  X=$X'`key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,'
+  X=$X'`k` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,'
   X=$X'`data` longblob NOT NULL,'
   X=$X'`expires` datetime NOT NULL,'
   X=$X'`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP'
   X=$X') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
   $MY "$X"
 
-  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`cache` ADD PRIMARY KEY (`id`), ADD KEY `key` (`key`), ADD KEY `expires` (`expires`), ADD KEY `timestamp` (`timestamp`);'
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`cache` ADD PRIMARY KEY (`id`), ADD KEY `k` (`k`), ADD KEY `expires` (`expires`), ADD KEY `timestamp` (`timestamp`);'
   $MY "$X"
 
   X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`cache` MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;'
