@@ -36,3 +36,4 @@ AP=~/setup_gcp/scripts/tools/appendFileOnce.sh
 AC=~/setup_gcp/scripts/tools/appendCronOnce.sh
 IN=~/setup_gcp/scripts/tools/inFile.sh
 MY=~/setup_gcp/scripts/tools/mysql/commandServer1Link.sh
+CC=~/setup_gcp/scripts/tools/cacheCheckout.sh
