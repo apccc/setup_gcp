@@ -29,15 +29,18 @@ DAYS=`echo "$2" | egrep -oe '[0-9]*' | head -n 1`
 #help cleanup
 $MY "DELETE FROM ${SYSTEM_DATABASE}.cache WHERE expires <= NOW() LIMIT 1000"
 
-#fail if there is an existing entry, otherwise store and output okay
+#fail if there is an existing entry
 if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.cache WHERE k='"$KEY"' AND expires > NOW() LIMIT 1" | wc -l` -gt 0 ]];then
   echo 'fail'
-else
-  if [ `$MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo "$3" | base64)"')" 2>&1 | grep Duplicate | wc -l` -gt 0 ];then
-    echo 'fail'
-    exit
-  fi
-  echo 'ok'
+  exit 1
 fi
 
+#fail if we received an error
+if [ `$MY "INSERT INTO ${SYSTEM_DATABASE}.cache (k,expires,data) VALUES('"$KEY"',ADDDATE(NOW(), INTERVAL "$DAYS" DAY),'"$(echo "$3" | base64)"')" 2>&1 | grep ERROR | wc -l` -gt 0 ];then
+  echo 'fail'
+  exit 1
+fi
+
+#all is well
+echo 'ok'
 exit 0
