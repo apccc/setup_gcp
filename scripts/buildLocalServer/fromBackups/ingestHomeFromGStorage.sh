@@ -27,7 +27,6 @@ SUBFOLDER=`ls -1 "$TMPDIR" | head -n 1`
 if [ ! -z "$SUBFOLDER" ] && [ -d "${TMPDIR}/${SUBFOLDER}" ];then
   SOURCEHOMEPATH="${TMPDIR}/${SUBFOLDER}"
   for F in `ls -1 "$SOURCEHOMEPATH"`;do
-    echo " * $F found in source home"
     DEST=~/$F
     if [ -d "$DEST" ];then
       echo " * $DEST exists (directory) skipping..."
