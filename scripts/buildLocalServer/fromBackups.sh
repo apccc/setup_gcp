@@ -14,6 +14,7 @@ echo " * Building local server from $ZSTORE backups!"
 MOST_RECENT_HOME_BACKUP=`gsutil ls -l "gs://${ZSTORE}_home/" | egrep -ve '^TOTAL:' | awk '{print $2," ",$3}' | sort | tail -n 1 | awk '{print $2}'`
 if [ ! -z "$MOST_RECENT_HOME_BACKUP" ];then
   echo " * Most recent home backup found: $MOST_RECENT_HOME_BACKUP"
+  ~/setup_gcp/scripts/buildLocalServer/fromBackups/ingestHomeFromGStorage.sh "$MOST_RECENT_HOME_BACKUP"
 fi
 
 echo " * Done building local server from $ZSTORE backups!"
