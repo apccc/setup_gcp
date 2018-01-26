@@ -14,6 +14,7 @@ if [ ! -f "$F" ];then
   echo " * Creating $F"
   echo "[mysqld]" | sudo tee "$F" > /dev/null
   echo "log-bin" | sudo tee -a "$F" > /dev/null
+  echo "expire_logs_days=3" | sudo tee -a "$F" > /dev/null
 
   #setup as replication member server
   ~/setup_gcp/scripts/buildLocalServer/mysql/set.replication.server.sh
