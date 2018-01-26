@@ -11,7 +11,7 @@ FOLDERS="$2"
 
 echo " * Building local server from $ZSTORE backups!"
 
-MOST_RECENT_HOME_BACKUP=`gsutil ls -l "gs://$ZSTORE_home/" | egrep -ve '^TOTAL:' | awk '{print $2," ",$3}' | sort | tail -n 1 | awk '{print $2}'`
+MOST_RECENT_HOME_BACKUP=`gsutil ls -l "gs://${ZSTORE}_home/" | egrep -ve '^TOTAL:' | awk '{print $2," ",$3}' | sort | tail -n 1 | awk '{print $2}'`
 if [ ! -z "$MOST_RECENT_HOME_BACKUP" ];then
   echo " * Most recent home backup found: $MOST_RECENT_HOME_BACKUP"
 fi
