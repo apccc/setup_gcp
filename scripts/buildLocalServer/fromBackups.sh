@@ -6,7 +6,7 @@ if [ -z "$1" ];then
   echo "zstore not set!"
   exit 1
 fi
-ZSTORE=echo "$1" | egrep -oe '[0-9a-zA-Z_]*'
+ZSTORE=`echo "$1" | egrep -oe '[0-9a-zA-Z_]*'`
 FOLDERS="$2"
 
 echo " * Building local server from $ZSTORE backups!"
