@@ -38,6 +38,7 @@ if [ ! -z "$SUBFOLDER" ] && [ -d "${TMPDIR}/${SUBFOLDER}" ];then
       continue
     fi
     echo " * Moving $F to $DEST"
+    mv "${SOURCEHOMEPATH}/${F}" "$DEST"
   done
 fi
 
