@@ -28,6 +28,16 @@ if [ ! -z "$SUBFOLDER" ] && [ -d "${TMPDIR}/${SUBFOLDER}" ];then
   SOURCEHOMEPATH="${TMPDIR}/${SUBFOLDER}"
   for F in `ls -1 "$SOURCEHOMEPATH"`;do
     echo " * $F found in source home"
+    DEST=~/$F
+    if [ -d "$DEST" ];then
+      echo " * $DEST exists (directory) skipping..."
+      continue
+    fi
+    if [ -f "$DEST" ];then
+      echo " * $DEST exists (file) skipping..."
+      continue
+    fi
+    echo " * Moving $F to $DEST"
   done
 fi
 
