@@ -17,7 +17,7 @@ e.g.:
 
 # build local slave from master backup file
 ~/setup_gcp/scripts/tools/mysql/buildLocalSlaveFromMasterBackupFile.sh ~/dbdump.day.5.sql.gz
--(setup configuration file must have database replication configured correctly)
+- (setup configuration file must have database replication configured correctly)
 
 # setup local database as replication master
 ~/setup_gcp/scripts/buildLocalServer/mysql/set.replication.master.sh
