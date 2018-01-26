@@ -7,9 +7,17 @@ if [ -z "$1" ];then
   exit 1
 fi
 
-GSBACKUPFILE="$1"
+GSBACKUPFILEFULLPATH="$1"
 
-echo " * Ingesting home directory from GS backup file $GSBACKUPFILE"
+echo " * Ingesting home directory from GS backup file $GSBACKUPFILEFULLPATH"
+
+GSBACKUPPATH=`echo "$GSBACKUPFILEFULLPATH" | cut -d'/' -f3,4`
+if [ -z "$GSBACKUPPATH" ];then
+  echo " * GS backup path unrecognized!"
+  exit 1
+fi
+
+~/setup_gcp/scripts/tools/datamanagement/transferGCSBackupFilesToFolder.sh "$GSBACKUPPATH" ~/
 
 echo " * Done ingesting home directory from GS backup file $GSBACKUPFILE"
 
