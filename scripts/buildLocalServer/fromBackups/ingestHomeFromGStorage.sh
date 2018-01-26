@@ -17,7 +17,23 @@ if [ -z "$GSBACKUPPATH" ];then
   exit 1
 fi
 
-~/setup_gcp/scripts/tools/datamanagement/transferGCSBackupFilesToFolder.sh "$GSBACKUPPATH" ~/
+TMPDIR=/tmp/ingesthomefromgstore
+if [ ! -d "$TMPDIR" ];then
+  mkdir "$TMPDIR"
+fi
+~/setup_gcp/scripts/tools/datamanagement/transferGCSBackupFilesToFolder.sh "$GSBACKUPPATH" "$TMPDIR"
+
+SUBFOLDER=`ls -1 "$TMPDIR" | head -n 1`
+if [ ! -z "$SUBFOLDER" ] && [ -d "${TMPDIR}/${SUBFOLDER}" ];then
+  SOURCEHOMEPATH="${TMPDIR}/${SUBFOLDER}"
+  for F in `ls -1 "$SOURCEHOMEPATH"`;do
+    echo " * $F found in source home"
+  done
+fi
+
+if [ -d "$TMPDIR" ];then
+  rm -rf "$TMPDIR"
+fi
 
 echo " * Done ingesting home directory from GS backup file $GSBACKUPFILE"
 
