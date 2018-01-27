@@ -19,6 +19,9 @@ sudo apt-get install -yqq php7.0-mysql
 echo "* Installing php7.0:"
 sudo apt-get install -yqq php7.0
 
+echo "* Installing php-curl"
+sudo apt-get install -yqq php-curl
+
 #clear out existing sites-enabled files
 if [ -d /etc/apache2/sites-enabled ];then
   echo " * Clearing existing files in sites-enabled:"
