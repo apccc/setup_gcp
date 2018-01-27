@@ -316,7 +316,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_buckets'
 fi
 HOMEBNAME="zstore_${STORAGE_IDENTIFIER}_home"
 HOMEBID=`$MY "SELECT (max(id)+1) AS z FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets" | tail -n 1`
-if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE server='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
+if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$(HOMEBNAME)'" | tail -n +2 | wc -l` -lt 1 ]];then
   BID=$HOMEBID
   BNAME=$HOMEBNAME
   BCLASS="DURABLE_REDUCED_AVAILABILITY"
