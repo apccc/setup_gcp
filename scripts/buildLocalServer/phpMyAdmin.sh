@@ -46,7 +46,10 @@ done
 L=`grep -n 'You can disable a server config entry by setting host to' $F | cut -d':' -f1`
 L=$((L-1))
 
-$AP '$i++;$cfg["Servers"][$i]["host"]="127.0.0.1";' $F $L
+if [ -z "$MYSQL_1_HOST" ];then
+  $MYSQL_1_HOST="127.0.0.1"
+fi
+$AP '$i++;$cfg["Servers"][$i]["host"]="$MYSQL_1_HOST";' $F $L
 
 cat $F | sudo tee $FORIG > /dev/null
 rm $F
