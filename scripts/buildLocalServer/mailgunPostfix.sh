@@ -30,6 +30,12 @@ if [ ! -f /etc/postfix/main.cf ] || [ `grep mailgun /etc/postfix/main.cf | wc -l
 
   #restart postfix to take new configuration
   sudo /etc/init.d/postfix restart
+<<<<<<< HEAD
+=======
+
+  #install mailutils for command line mail service
+  sudo apt-get install mailutils -y
+>>>>>>> c2f3552d11714c09eae41bfd726266f81c8c28b5
 fi
 
 echo " * Done Installing Postfix Mailgun Relay System"
