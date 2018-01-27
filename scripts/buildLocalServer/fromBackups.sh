@@ -30,7 +30,7 @@ fi
 if [ ! -z "$FOLDERS" ];then
   echo " * Grabbing additional folders from backup:"
   for FOLDER in `echo "$FOLDERS" | egrep -oe '[a-zA-Z0-9_./-]*'`;do
-    echo " * Grabbing folder * $FOLDER"
+    echo " * Grabbing folder $FOLDER"
     REMOTEFOLDER=`echo "$FOLDER" | tr '/' '_'`
     sudo mkdir -p "$FOLDER" 2>/dev/null
     M=`whoami`
