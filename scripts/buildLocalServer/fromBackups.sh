@@ -35,7 +35,11 @@ if [ ! -z "$FOLDERS" ];then
     sudo mkdir -p "$FOLDER" 2>/dev/null
     M=`whoami`
     sudo chown ${M}:${M} "$FOLDER"
-    
+    GSBACKUPFILEFULLPATH=`gsutil ls -l "gs://${ZSTORE}${REMOTEFOLDER}/" | egrep -ve '^TOTAL:' | awk '{print $2," ",$3}' | sort | tail -n 1 | awk '{print $2}'`
+    if [ ! -z "$GSBACKUPFILEFULLPATH" ];then
+      echo " * Transferring $GSBACKUPFILEFULLPATH to $FOLDER"
+#      ~/setup_gcp/scripts/buildLocalServer/fromBackups/ingestFolderSkipExisting.sh "$GSBACKUPFILEFULLPATH" "$FOLDER"
+    fi
   done
 fi
 
