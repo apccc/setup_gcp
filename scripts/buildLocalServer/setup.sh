@@ -126,13 +126,19 @@ gcloud auth login
 #Include variables from config file
 source "$F"
 
+
 #Do the builds
+
+#Mailgun & Postfix
+~/setup_gcp/scripts/buildLocalServer/mailgunPostfix.sh
+
 #Database
 echo " * Install Local Database? (y/n)"
 read X
 if [[ "$X" == "y" ]];then
   ~/setup_gcp/scripts/buildLocalServer/mysql.sh
 fi
+
 #Web Server
 echo " * Install Local Web Server? (y/n)"
 read X
