@@ -180,7 +180,9 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'sites';" | tail -n +2 | wc 
 
   X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`sites` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
   $MY "$X"
+fi
 
+if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.sites WHERE subdomain='${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}' LIMIT 1" | tail -n +2 | wc -l` -lt 1 ]];then
   #setup default site entry
   RWTMP='/tmp/rwtmp.txt'
   touch $RWTMP
