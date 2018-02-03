@@ -420,6 +420,33 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_Service
 fi
 
 
+#create the VM to Site Link Table
+if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'sites_vms';" | tail -n +2 | wc -l` -lt 1 ]];then
+  X='CREATE TABLE IF NOT EXISTS `'"${SYSTEM_DATABASE}"'`.`sites_vms` ('
+  X=$X'`id` int(10) unsigned NOT NULL,'
+  X=$X'`site_id` int(10) unsigned NOT NULL,'
+  X=$X'`vm_id` int(10) unsigned NOT NULL'
+  X=$X') ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`sites_vms` ADD PRIMARY KEY (`id`), ADD KEY `site_id` (`site_id`), ADD KEY `vm_id` (`vm_id`);'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`sites_vms` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
+  $MY "$X"
+fi
+
+
+#link the vm to the default site entry
+VMID=`$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleComputeEngine_VMInstances WHERE name='$(hostname)'" | tail -n +2`
+DEFAULTSITEID=`$MY "SELECT id FROM ${SYSTEM_DATABASE}.sites WHERE subdomain='${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN}' LIMIT 1" | tail -n +2`
+if [ ! -z "$VMID" ] && [ ! -z "$DEFAULTSITEID" ] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.sites_vms WHERE vm_id='${VMID}' AND site_id='${DEFAULTSITEID}' LIMIT 1" | tail -n +2 | wc -l` -lt 1 ]];then
+  echo " * Linking subdomain ${COMPANY_ADMIN_SUBDOMAIN}.${COMPANY_DOMAIN} site with vm $(hostname)"
+  $MY "INSERT INTO ${SYSTEM_DATABASE}.sites_vms (vm_id,site_id) VALUES('${VMID}','${DEFAULTSITEID}')"
+fi
+
 echo " * Done setting up database for default Web site"
 
 exit 0
+
+
