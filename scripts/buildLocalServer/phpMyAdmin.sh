@@ -49,7 +49,7 @@ L=$((L-1))
 if [ -z "$MYSQL_1_HOST" ];then
   $MYSQL_1_HOST="127.0.0.1"
 fi
-$AP '$i++;$cfg["Servers"][$i]["host"]="$MYSQL_1_HOST";' $F $L
+$AP '$i++;$cfg["Servers"][$i]["host"]="'"${MYSQL_1_HOST}"'";' $F $L
 
 cat $F | sudo tee $FORIG > /dev/null
 rm $F
