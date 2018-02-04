@@ -28,8 +28,11 @@ fi
 #create backup schedule for home path
 HOMEBID=`$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$HOMEBNAME' LIMIT 1" | tail -n +2`
 if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_backupSchedule WHERE server='$(hostname)' AND path='/home'" | tail -n +2 | wc -l` -lt 1 ]];then
+  echo " * Creating backup schedule for /home directory on $(hostname) to $HOMEBNAME (${HOMEBID})"
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
   X=$X'VALUES ("'"$(hostname)"'","/home","$HOMEBID",NOW());'
+  echo
+  echo "Running: $X"
   $MY "$X"
 fi
 
