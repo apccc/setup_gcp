@@ -156,5 +156,8 @@ if [[ "$X" == "y" ]];then
   fi
 fi
 
-echo "Config File: $F"
+#Setup server maintenance scripts
+~/setup_gcp/scripts/buildLocalServer/maintenance.sh
+
+echo " * Config File: $F"
 exit 0
