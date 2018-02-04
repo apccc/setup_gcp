@@ -40,8 +40,6 @@ if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleClou
   echo " * Creating backup schedule for /home directory on $(hostname) to $HOMEBNAME (${HOMEBID})"
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
   X=$X'VALUES ("'"$(hostname)"'","/home","'"$HOMEBID"'",NOW());'
-  echo
-  echo "Running: $X"
   $MY "$X"
 fi
 
