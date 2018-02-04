@@ -12,6 +12,15 @@ $AC '4 4 * * 6 ~/setup_gcp/scripts/cron/updateSystem.sh > ~/cron.updateSystem.lo
 $AC '2 2 * * * ~/setup_gcp/scripts/cron/backupSystem.sh > ~/cron.backupSystem.log 2>&1'
 
 
+#record vm instance
+if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleComputeEngine_VMInstances WHERE name='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
+  echo " * Creating VM instance entry in ${SYSTEM_DATABASE} for $(hostname)"
+  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` (`name`,`zone`,`region`,`machine_type`,`ip`,`active`) '
+  X=$X'VALUES ("'"$(hostname)"'","'"$(~/setup_gcp/settings/get/gcloud/zone.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/region.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/machine-type.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/ip.sh)"'","T");'
+  $MY "$X"
+fi
+
+
 #create home bucket for backup
 HOMEBNAME="zstore_${STORAGE_IDENTIFIER}_home"
 if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$HOMEBNAME'" | tail -n +2 | wc -l` -lt 1 ]];then
