@@ -11,4 +11,26 @@ echo " * Installing basic cron tasks:"
 $AC '4 4 * * 6 ~/setup_gcp/scripts/cron/updateSystem.sh > ~/cron.updateSystem.log 2>&1'
 $AC '2 2 * * * ~/setup_gcp/scripts/cron/backupSystem.sh > ~/cron.backupSystem.log 2>&1'
 
+
+#create home bucket for backup
+HOMEBNAME="zstore_${STORAGE_IDENTIFIER}_home"
+if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$HOMEBNAME'" | tail -n +2 | wc -l` -lt 1 ]];then
+  BNAME=$HOMEBNAME
+  BCLASS="DURABLE_REDUCED_AVAILABILITY"
+  BLOCATION="US"
+  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_buckets` (`name`,`storageClass`,`bucketLocation`) '
+  X=$X'VALUES ("'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
+  $MY "$X"
+  gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
+fi
+
+
+#create backup schedule for home path
+HOMEBID=`$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$HOMEBNAME' LIMIT 1" | tail -n +2`
+if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_backupSchedule WHERE server='$(hostname)' AND path='/home'" | tail -n +2 | wc -l` -lt 1 ]];then
+  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
+  X=$X'VALUES ("'"$(hostname)"'","/home","$HOMEBID",NOW());'
+  $MY "$X"
+fi
+
 exit 0
