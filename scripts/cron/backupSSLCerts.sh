@@ -3,7 +3,7 @@
 #backup SSL Certs
 
 if [ `sudo ls -l /root/ssl/ 2> /dev/null | wc -l` -lt 1 ];then
-  echo "No files found to backup!"
+  echo " * No SSL files found to backup!"
   exit 1
 fi
 
