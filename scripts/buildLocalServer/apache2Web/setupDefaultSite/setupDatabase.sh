@@ -314,20 +314,6 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_buckets'
   $MY "$X"
   gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
 fi
-HOMEBNAME="zstore_${STORAGE_IDENTIFIER}_home"
-HOMEBID=`$MY "SELECT (max(id)+1) AS z FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets" | tail -n 1`
-if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_buckets WHERE name='$HOMEBNAME'" | tail -n +2 | wc -l` -lt 1 ]];then
-  BID=$HOMEBID
-  BNAME=$HOMEBNAME
-  BCLASS="DURABLE_REDUCED_AVAILABILITY"
-  BLOCATION="US"
-  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_buckets` (`id`,`name`,`storageClass`,`bucketLocation`) '
-  X=$X'VALUES ("'"$BID"'","'"$BNAME"'","'"$BCLASS"'","'"$BLOCATION"'");'
-  $MY "$X"
-  gsutil mb -p "$(~/setup_gcp/settings/get/gcloud/project-id.sh)" -c "$BCLASS" -l "$BLOCATION" "gs://${BNAME}/"
-else
-  HOMEBID=0
-fi
 
 
 #create Google Cloud Storage Backup Schedule table
@@ -352,11 +338,6 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleCloudStorage_backupSc
 
   X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
   X=$X'VALUES ("'"$(hostname)"'","/var/www","1",NOW());'
-  $MY "$X"
-fi
-if [[ $HOMEBID -gt 0 ]] && [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleCloudStorage_backupSchedule WHERE server='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
-  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleCloudStorage_backupSchedule` (`server`,`path`,`bucket_id`,`nextRun`) '
-  X=$X'VALUES ("'"$(hostname)"'","/home","$HOMEBID",NOW());'
   $MY "$X"
 fi
 
