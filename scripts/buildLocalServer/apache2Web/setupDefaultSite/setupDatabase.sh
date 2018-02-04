@@ -364,11 +364,6 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'googleComputeEngine_VMInsta
   X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
   $MY "$X"
 fi
-if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.googleComputeEngine_VMInstances WHERE name='$(hostname)'" | tail -n +2 | wc -l` -lt 1 ]];then
-  X='INSERT INTO `'"${SYSTEM_DATABASE}"'`.`googleComputeEngine_VMInstances` (`name`,`zone`,`region`,`machine_type`,`ip`,`active`) '
-  X=$X'VALUES ("'"$(hostname)"'","'"$(~/setup_gcp/settings/get/gcloud/zone.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/region.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/machine-type.sh)"'","'"$(~/setup_gcp/settings/get/gcloud/ip.sh)"'","T");'
-  $MY "$X"
-fi
 
 
 #create Google Cloud Compute Engine Service Account Scopes table
