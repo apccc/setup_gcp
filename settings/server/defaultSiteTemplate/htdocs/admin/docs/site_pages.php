@@ -37,6 +37,20 @@ $edit_fields=array(
 	'code'=>array(
 		'edit_field_type'=>'textarea'
 	),
+	'code_type'=>array(
+		'edit_field_type'=>'radio',
+		'default_value'=>'HTML',
+		'radios'=>array(
+			0=>array(
+				'display'=>'PHP',
+				'value'=>'PHP'
+			),
+			1=>array(
+				'display'=>'HTML',
+				'value'=>'HTML'
+			),
+		)
+	),
 	'active'=>array(
 		'edit_field_type'=>'t_or_f'
 	)
