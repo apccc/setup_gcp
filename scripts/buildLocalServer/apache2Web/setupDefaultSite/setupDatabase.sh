@@ -255,6 +255,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'site_pages';" | tail -n +2 
   X=$X'`description` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,'
   X=$X'`keywords` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,'
   X=$X'`code` longtext COLLATE utf8mb4_unicode_ci NOT NULL,'
+  X=$X'`code_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,'
   X=$X'`active` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T"'
   X=$X') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
   $MY "$X"
