@@ -110,10 +110,14 @@ if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
   sed -i -e "s/<<RECAPTCHASECRETKEY>>/${RECAPTCHASECRETKEY}/g" "$F"
 fi
 if [ `grep '<<WHITELISTEDIPS>>' "$F" | wc -l` -gt 0 ];then
-  ZWHITEIP=`sudo netstat -antp | grep ':22' | grep 'ESTABLISHED' | sed 's/\s\s*/ /g' | cut -d' ' -f5 | cut -d':' -f1 | egrep -oe '[0-9]+.[0-9]+.[0-9]+.[0-9]+' | head -n 1`
+  echo -n " * Enter IP Address to Whitelist for Admin Access: "
+  read ZWHITEIP
+  if [ -z "$ZWHITEIP" ];then
+    ZWHITEIP=`sudo netstat -antp | grep ':22' | grep 'ESTABLISHED' | sed 's/\s\s*/ /g' | cut -d' ' -f5 | cut -d':' -f1 | egrep -oe '[0-9]+.[0-9]+.[0-9]+.[0-9]+' | head -n 1`
+  fi
   sed -i -e "s/<<WHITELISTEDIPS>>/${ZWHITEIP}/g" "$F"
   if [ ! -z "$ZWHITEIP" ];then
-    echo " *** Whitelisting connected IP $ZWHITEIP ***"
+    echo " *** Whitelisting IP $ZWHITEIP ***"
   fi
 fi
 
