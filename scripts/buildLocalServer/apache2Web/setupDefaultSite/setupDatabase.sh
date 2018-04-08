@@ -187,6 +187,8 @@ if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.sites WHERE subdomain='${COMPANY_A
   RWTMP='/tmp/rwtmp.txt'
   touch $RWTMP
   echo 'RewriteRule ^/log$ /loginPage.php?%{QUERY_STRING} [PT,L]' >> $RWTMP
+  echo 'RewriteRule ^/accountCreated$ /accountCreatedPage.php?%{QUERY_STRING} [PT,L]' >> $RWTMP
+  echo 'RewriteRule ^/accountActivate/([0-9]+)/([a-zA-Z0-9]+)$ /accountActivatePage.php?userid=$1&hash=$2 [PT,L]' >> $RWTMP
   echo 'RewriteRule ^/resetPassword/([0-9]+)/([a-zA-Z0-9]+)$ /resetPasswordPage.php?userid=$1&hash=$2&%{QUERY_STRING} [PT,L]' >> $RWTMP
   echo 'RewriteRule ^/js/script([0-9-]+).js$ /jsPage.php?q=$1&%{QUERY_STRING} [PT,L]' >> $RWTMP
   echo 'RewriteRule ^/css/style([0-9-]+).css$ /cssPage.php?q=$1&%{QUERY_STRING} [PT,L]' >> $RWTMP
