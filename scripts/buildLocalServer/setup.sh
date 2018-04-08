@@ -94,7 +94,7 @@ if [ `grep '<<MAILGUNSMTPUSERNAME>>' "$F" | wc -l` -gt 0 ];then
 fi
 if [ `grep '<<MAILGUNSMTPPASSWORD>>' "$F" | wc -l` -gt 0 ];then
   echo -n " * Enter the Mailgun SMTP Password: "
-  read -s MAILGUNSMTPPASSWORD
+  read MAILGUNSMTPPASSWORD
   echo ""
   sed -i -e "s/<<MAILGUNSMTPPASSWORD>>/${MAILGUNSMTPPASSWORD}/g" "$F"
 fi
@@ -105,7 +105,7 @@ if [ `grep '<<RECAPTCHASSITEKEY>>' "$F" | wc -l` -gt 0 ];then
 fi
 if [ `grep '<<RECAPTCHASECRETKEY>>' "$F" | wc -l` -gt 0 ];then
   echo -n " * Enter the ReCaptcha Secret Key: "
-  read -s RECAPTCHASECRETKEY
+  read RECAPTCHASECRETKEY
   echo ""
   sed -i -e "s/<<RECAPTCHASECRETKEY>>/${RECAPTCHASECRETKEY}/g" "$F"
 fi
