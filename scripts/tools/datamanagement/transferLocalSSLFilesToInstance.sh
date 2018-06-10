@@ -13,7 +13,7 @@ echo "Transferring SSL files to instance $INSTANCE"
 exit 0
 mkdir /tmp/ssl
 sudo rsync -av /root/ssl/ /tmp/ssl/
-gcloud compute scp --recurse /tmp/ssl $INSTANCE:~/
+gcloud compute scp --recurse /tmp/ssl $INSTANCE:/tmp/
 rm -r /tmp/ssl
 
 exit 0
