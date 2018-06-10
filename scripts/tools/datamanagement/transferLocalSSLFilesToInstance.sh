@@ -6,7 +6,7 @@ if [ -z "$1" ];then
   echo "Error: Remote instance name not provided."
   exit 1
 fi
-INSTANCE=`echo "$1" | egrep -oe '[a-zA-Z0-9_.-]*'`
+INSTANCE=`echo "$1" | egrep -oe '[a-zA-Z0-9_.-]*' | head -n 1`
 
 echo "Transferring SSL files to instance $INSTANCE"
 
