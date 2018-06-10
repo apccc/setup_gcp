@@ -1251,12 +1251,15 @@ class admin_doc_class
 			."<table border='0' cellpadding='0' cellspacing='0'><tr>"
 			."<td><select id='".$f['field_name']."_from_select' multiple='multiple' size=".$f['size'].">";
 			$selectable=array();
-			$sql=""
-				."SELECT `".$f['input_value']."`,`".$f['input_visible']."` "
-				."FROM `".$f['select_db']."`.`".$f['select_table']."` "
-				.(isset($f['select_table_display_where'])?$f['select_table_display_where']:"")
-				."ORDER BY `".$f['input_visible']."` ASC"
-			;
+			if(isset($f['sql'])&&$f['sql'])
+				$sql=$f['sql'];
+			else
+				$sql=""
+					."SELECT `".$f['input_value']."`,`".$f['input_visible']."` "
+					."FROM `".$f['select_db']."`.`".$f['select_table']."` "
+					.(isset($f['select_table_display_where'])?$f['select_table_display_where']:"")
+					."ORDER BY `".$f['input_visible']."` ASC"
+				;
 			foreach($database_mysqli_local->mysqlidb->getRowsFromQuery($sql) as $row)
 			{
 				$selectable[]=$row;
