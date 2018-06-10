@@ -8,13 +8,14 @@ if [ -z "$1" ];then
 fi
 INSTANCE=`echo "$1" | egrep -oe '[a-zA-Z0-9_.-]*' | head -n 1`
 DESTDIR="/tmp/"
+LOCALDIR="/tmp/ssl"
 PROCESSMESSAGE="Transferring SSL files to instance $INSTANCE at $DESTDIR"
 echo "$PROCESSMESSAGE"
 
-mkdir /tmp/ssl
-sudo rsync -av /root/ssl/ /tmp/ssl/
-gcloud compute scp --recurse /tmp/ssl $INSTANCE:$DESTDIR
-sudo rm -r /tmp/ssl
+mkdir "$LOCALDIR"
+sudo rsync -av /root/ssl/ "${LOCALDIR}/
+gcloud compute scp --recurse "$LOCALDIR" $INSTANCE:$DESTDIR
+sudo rm -r "$LOCALDIR"
 
 echo "Done $PROCESSMESSAGE"
 
