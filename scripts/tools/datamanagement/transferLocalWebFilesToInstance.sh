@@ -7,7 +7,7 @@ if [ -z "$1" ];then
   exit 1
 fi
 INSTANCE=`echo "$1" | egrep -oe '[a-zA-Z0-9_.-]*' | head -n 1`
-DESTDIR="/var/www/"
+DESTDIR="/tmp/"
 LOCALDIR="/var/www"
 PROCESSMESSAGE="Transferring Web files to instance $INSTANCE at $DESTDIR"
 echo " * $PROCESSMESSAGE"
