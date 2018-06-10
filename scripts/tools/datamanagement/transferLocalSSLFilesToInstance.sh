@@ -13,7 +13,7 @@ PROCESSMESSAGE="Transferring SSL files to instance $INSTANCE at $DESTDIR"
 echo "$PROCESSMESSAGE"
 
 mkdir "$LOCALDIR"
-sudo rsync -av /root/ssl/ "${LOCALDIR}/
+sudo rsync -av /root/ssl/ "${LOCALDIR}/"
 gcloud compute scp --recurse "$LOCALDIR" $INSTANCE:$DESTDIR
 sudo rm -r "$LOCALDIR"
 
