@@ -375,7 +375,7 @@ class admin_doc_class
 						$fieldValue=(isset($fieldName)&&$fieldName&&isset($r[$fieldName])?$r[$fieldName]:"");
 						$this->output_content.=""
 							."<td>"
-								.(is_array($field)&&is_string($field['evalFieldValue'])
+								.(is_array($field)&&isset($field['evalFieldValue'])&&is_string($field['evalFieldValue'])
 									?eval($field['evalFieldValue'])
 									:htmlspecialchars($fieldValue)
 								)
