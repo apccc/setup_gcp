@@ -377,7 +377,13 @@ class admin_doc_class
 							."<td>"
 								.(is_array($field)&&isset($field['evalFieldValue'])&&is_string($field['evalFieldValue'])
 									?eval($field['evalFieldValue'])
-									:htmlspecialchars($fieldValue)
+                                                                        :(is_array($field)&&is_string($field['use_image_field'])
+                                                                                ?$this->getImagePreviewFromRowAndImageKey($r,$field['use_image_field'])
+                                                                                :(is_array($field)&&isset($field['convertWithEditField'])
+                                                                                        ?$this->convertWithEditFieldFromRowAndKey($r,$fieldName)
+                                                                                        :htmlspecialchars($fieldValue)
+                                                                                )
+                                                                        )
 								)
 							."</td>"
 						;
@@ -1840,7 +1846,87 @@ class admin_doc_class
 		return hash('sha1',$key.$nonce);
 	}
 
-}
+        /**
+        * Get the Image Preview For The Multi List
+        * @param array $row - The Row from the database
+        * @param string $key - The Image to Key in on
+        * @returns string - The HTML of the image
+        **/
+        private function getImagePreviewFromRowAndImageKey($row,$key)
+        {
+                $out="";
+                if(empty($row)||empty($key)||empty($this->image_fields[$key]['folder'])||empty($this->image_fields[$key]['url_base_folder'])) return $out;
+                $filename=$this->image_fields[$key]['file_name_format'];
+                foreach($row as $k => $v)
+                        $filename=str_replace("{".$k."}",$v,$filename);
+                $imgFullPath=$this->image_fields[$key]['folder'].'/'.$filename;
+                $imgPath=$this->image_fields[$key]['url_base_folder'].'/'.$filename;
+                if(!is_file($imgFullPath)) return $out;
+                $getSmImgPath=self::getSmallImageFromImagefullpathBasefolderMaxwidthAndMaxheight($imgFullPath,$this->image_fields[$key]['url_base_folder'],100,100);
+                $out.="<img src='".$getSmImgPath."' style='max-height:100px;max-width:100px;' />";
+                return $out;
+        }
 
+	/**
+        * Get Small Image From Image Full Path, Base Folder, Max Width, and Max Height
+        * @param string $imgFullPath - The full path to the image
+        * @param string $urlBaseFolder - The base folder for the URL of the image
+        * @param int $maxWidth - The Max Width of the Small Image
+        * @param int $maxHeight - The Max Height of the Small Image
+        **/
+        private function getSmallImageFromImagefullpathBasefolderMaxwidthAndMaxheight($imgFullPath,$urlBaseFolder,$maxWidth,$maxHeight)
+        {
+                $origImageFileName=basename($imgFullPath);
+                $origImageFileFolder=dirname($imgFullPath);
+                $smallImageFileName=$origImageFileName."_adminsmall.jpg";
+                $smallImageFilePath=$origImageFileFolder."/".$smallImageFileName;
+                list($origWidth,$origHeight,$origType,$origAttr)=getimagesize($imgFullPath);
+                //return image if it's an okay size
+                if($origWidth<=$maxWidth&&$origHeight<=$maxHeight) return $urlBaseFolder."/".$origImageFileName;
+                //return the small image we already have
+                if(is_file($smallImageFilePath)&&filemtime($smallImageFilePath)>=filemtime($imgFullPath)) return $urlBaseFolder."/".$smallImageFileName;
+                //make the image and return the path
+                if($origWidth>$origHeight)
+                {
+                        $newWidth=$maxWidth;
+                        $newHeight=($origHeight/$origWidth)*$newWidth;
+                }
+                else
+                {
+                        $newHeight=$maxHeight;
+                        $newWidth=($origWidth/$origHeight)*$newHeight;
+                }
+                require_once dirname(dirname(dirname(__FILE__))).'/class/zInterface/modules/createProportionateThumb.php';
+                if(createProportionateThumb::jpg($imgFullPath,$smallImageFilePath,$newWidth,$newHeight)) return $urlBaseFolder."/".$smallImageFileName;
+                return $urlBaseFolder."/".$origImageFileName;
+        }
+        /**
+        * Convert the Visible Multi List Field Entry Using the Edit Field Information
+        * @param array $row - The Row from the database
+        * @param string $key - The Field Name
+        * @returns string - The HTML for the field
+        **/
+        private function convertWithEditFieldFromRowAndKey($row,$key)
+        {
+                $out="";
+                if(empty($row)||empty($key)||empty($row[$key])||empty($this->edit_fields[$key])) return $out;
+
+                $sql=""
+                        ."SELECT `".$this->edit_fields[$key]['input_visible']."` "
+                        ."FROM `".$this->edit_fields[$key]['select_db']."`.`".$this->edit_fields[$key]['select_table']."` "
+                        ."WHERE `".$this->edit_fields[$key]['input_value']."`IN('".str_replace(',',"','",$row[$key])."')"
+                        ."ORDER BY `".$this->edit_fields[$key]['input_visible']."`"
+                ;
+		$result=$this->database_mysqli->mysqlidb->getRowsFromQuery($sql);
+                $i=0;
+                foreach($result as $r)
+                {
+                        $out.=($i?" ":"").$r[$this->edit_fields[$key]['input_visible']];
+                        $i++;
+                }
+
+                return $out;
+        }
+}
 
 ?>
