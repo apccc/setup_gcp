@@ -509,8 +509,9 @@ class admin_doc_class
 				}
 			}
 			$this->output_content.=""
-			."<div id='title_div'><a href='".$this->reGet()."'>".$this->multiple_name."</a></div>"
-			."<form action='' method='post' enctype='multipart/form-data'><table id='single_table'>";
+				."<div id='title_div'><a href='".$this->reGet()."'>".$this->multiple_name."</a></div>"
+				."<form action='' method='post' enctype='multipart/form-data'><table id='single_table'>"
+			;
 			if(count($this->edit_fields))
 			{
 				foreach($this->edit_fields as $key => $field)
@@ -599,6 +600,11 @@ class admin_doc_class
 					if($_POST[$field['field_name']]=base64_encode(file_get_contents($_FILES[$field['field_name']]['tmp_name'])))
 						unlink($_FILES[$field['field_name']]['tmp_name']);
 				}
+
+				if($field['edit_field_type']=='one_way_password'&&isset($_POST[$field['field_name']])&&strlen($_POST[$field['field_name']]))
+					require_once dirname(dirname(__DIR__)).'/class/zInterface/modules/loginModel.php';
+				elseif($field['edit_field_type']=='one_way_password')
+					continue;
 
 				if($i)
 					$sql.=",";
@@ -1630,6 +1636,32 @@ class admin_doc_class
 						."</textarea>"
 					."</td>"
 				."</tr>"
+			;
+		}
+		elseif($f['edit_field_type']=='one_way_password')
+		{
+			$out.=""
+				."<tr>"
+					.'<td class="input_name">'
+						.$f['edit_name']."<br/><i><b>(only use to reset password)</b></i>"
+					.'</td>'
+				.'<td class="input_value"><input type="text" name="'.$f['field_name'].'" value=""'
+			;
+			if(!(isset($f['size'])&&is_numeric($f['size'])))
+				$out.=' style="width:100%;"';
+			else
+				$out.=' size="'.$f['size'].'"';
+
+			$c='attr.';
+			foreach($f as $k=>$v)
+				if(substr($k,0,strlen($c))==$c)
+					$out.=" ".substr($k,strlen($c))."=\"".htmlspecialchars($v)."\"";
+
+			$out.=""
+				." />"
+				.(!empty($f['attr.pattern'])?
+				  	'<div class="attrPatternNote">Required Pattern: '.$f['attr.pattern'].'</div>':'')
+				."</td></tr>"
 			;
 		}
 		elseif($f['edit_field_type']=='template_plug-in')
