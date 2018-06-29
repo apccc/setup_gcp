@@ -601,9 +601,9 @@ class admin_doc_class
 						unlink($_FILES[$field['field_name']]['tmp_name']);
 				}
 
-				if($field['edit_field_type']=='one_way_password'&&isset($_POST[$field['field_name']])&&strlen($_POST[$field['field_name']]))
+				if(isset($field['edit_field_type'])&&$field['edit_field_type']=='one_way_password'&&isset($_POST[$field['field_name']])&&strlen($_POST[$field['field_name']]))
 					require_once dirname(dirname(__DIR__)).'/class/zInterface/modules/loginModel.php';
-				elseif($field['edit_field_type']=='one_way_password')
+				elseif(isset($field['edit_field_type'])&&$field['edit_field_type']=='one_way_password')
 					continue;
 
 				if($i)
