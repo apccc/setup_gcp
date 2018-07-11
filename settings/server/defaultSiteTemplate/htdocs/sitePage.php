@@ -25,7 +25,7 @@ zInterface::setPageTitle($page['title']);
 zInterface::setPageDescription($page['description']);
 zInterface::setPageKeywords($page['keywords']);
 zInterface::addMidContent(
-	substr_compare($page['identifier'],'php_',0,4)===0?eval($page['code']):$page['code']
+	$page['code_type']==='PHP'?eval($page['code']):$page['code']
 );
 echo zInterface::getPage();
 ?>
