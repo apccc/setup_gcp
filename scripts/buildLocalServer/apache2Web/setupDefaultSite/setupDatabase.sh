@@ -194,6 +194,9 @@ if [[ `$MY "SELECT id FROM ${SYSTEM_DATABASE}.sites WHERE subdomain='${COMPANY_A
   echo 'RewriteRule ^/css/style([0-9-]+).css$ /cssPage.php?q=$1&%{QUERY_STRING} [PT,L]' >> $RWTMP
   echo 'RewriteRule ^/favicon.ico$ /a64File.php?f=favicon&t=sites&id=1&%{QUERY_STRING} [PT,L]' >> $RWTMP
   echo 'RewriteRule ^/afile/([a-z0-9_-]+)/([0-9]+).([a-z0-9_-]+).([a-z0-9]+)$ /a64File.php?f=$3&t=$1&id=$2&ext=$4&%{QUERY_STRING} [PT,L]' >> $RWTMP
+  echo 'RewriteRule ^/$ /index.php?section=index&page=index&%{QUERY_STRING} [PT,L]' >> $RWTMP
+  echo 'RewriteRule ^/([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=index&%{QUERY_STRING} [PT,L]' >> $RWTMP
+  echo 'RewriteRule ^/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=$2&%{QUERY_STRING} [PT,L]' >> $RWTMP
   R=`cat "$RWTMP"`
   rm $RWTMP
 
