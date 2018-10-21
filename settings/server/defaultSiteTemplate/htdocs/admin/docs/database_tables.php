@@ -48,7 +48,7 @@ if(!empty($_POST['add'])&&!empty($_POST['database'])&&!empty($_POST['server'])&&
 	//get the database instance variable name
     $dbMysqli=${"database_mysqli_$s"};
     if(isset($dbMysqli)&&is_object($dbMysqli))
-      $dbMysqli->createDatabaseTable($d,$t);
+      $dbMysqli->mysqlidb->createDatabaseTable($d,$t);
   }
 }
 
