@@ -81,7 +81,7 @@ if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['fi
 	$s=preg_replace('[^a-z0-9_]','',$zDatabaseTable['server']);
 	$dbMysqli=${"database_mysqli_$s"};
 	if($zDatabaseTable['database']&&$zDatabaseTable['table']&&isset($dbMysqli)&&is_object($dbMysqli))
-		$dbMysqli->createDatabaseTableField($zDatabaseTable['database'],$zDatabaseTable['table'],$_POST['field'],$_POST);
+		$dbMysqli->mysqlidb->createDatabaseTableField($zDatabaseTable['database'],$zDatabaseTable['table'],$_POST['field'],$_POST);
 }
 
 
