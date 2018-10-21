@@ -72,6 +72,7 @@ $edit_fields=array(
 	),
 );
 
+
 //add database server table fields
 if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['field'])){
 	//get the database instance variable name
@@ -82,6 +83,7 @@ if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['fi
 	if($zDatabaseTable['database']&&$zDatabaseTable['table']&&isset($dbMysqli)&&is_object($dbMysqli))
 		$dbMysqli->createDatabaseTableField($zDatabaseTable['database'],$zDatabaseTable['table'],$_POST['field'],$_POST);
 }
+
 
 require_once dirname(__FILE__)."/template.php";
 $admin_class=new admin_doc_class;
