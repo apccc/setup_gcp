@@ -50,7 +50,7 @@ $edit_fields=array(
 		'edit_field_type'=>'t_or_f'
 	),
 	'type'=>array(
-		'field_name'=>'field',
+		'field_name'=>'type',
 		'attr.pattern'=>"^[a-z0-9_]+$",
 		'attr.class'=>"validate",
 		'attr.required'=>"required",
