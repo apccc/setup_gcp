@@ -79,9 +79,8 @@ if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['fi
 	if(empty($zDatabaseTable['server'])) throw new Exception("Database Server Entry Not Found! d: $d");
 	$s=$zDatabaseTable['server'];
 	$dbMysqli=${"database_mysqli_$s"};
-	$d=$zDatabaseTable->['table']);
-	if($zDatabaseTable->['database']&&$zDatabaseTable->['table']&&isset($dbMysqli)&&is_object($dbMysqli))
-		$dbMysqli->createDatabaseTableField($zDatabaseTable->['database'],$zDatabaseTable->['table'],$_POST['field'],$_POST);
+	if($zDatabaseTable['database']&&$zDatabaseTable['table']&&isset($dbMysqli)&&is_object($dbMysqli))
+		$dbMysqli->createDatabaseTableField($zDatabaseTable['database'],$zDatabaseTable['table'],$_POST['field'],$_POST);
 }
 
 require_once dirname(__FILE__)."/template.php";
