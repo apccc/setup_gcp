@@ -428,8 +428,52 @@ if [ ! -z "$VMID" ] && [ ! -z "$DEFAULTSITEID" ] && [[ `$MY "SELECT id FROM ${SY
   $MY "INSERT INTO ${SYSTEM_DATABASE}.sites_vms (vm_id,site_id) VALUES('${VMID}','${DEFAULTSITEID}')"
 fi
 
+
+#create the Database Tables Registry Table
+if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'database_tables';" | tail -n +2 | wc -l` -lt 1 ]];then
+  X='CREATE TABLE IF NOT EXISTS `'"${SYSTEM_DATABASE}"'`.`database_tables` ('
+  X=$X'`id` int(10) unsigned NOT NULL,'
+  X=$X'`database` varchar(50) COLLATE utf8_unicode_ci NOT NULL,'
+  X=$X'`table` varchar(50) COLLATE utf8_unicode_ci NOT NULL,'
+  X=$X'`active` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`controls` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`server` varchar(50) COLLATE utf8_unicode_ci NOT NULL'
+  X=$X') ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`database_tables` ADD PRIMARY KEY (`id`), ADD KEY `database` (`database`), ADD KEY `table` (`table`), ADD KEY `active` (`active`), ADD KEY `controls` (`controls`), ADD KEY `server` (`server`);'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`database_tables` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
+  $MY "$X"
+fi
+
+
+#create the Database Tables Field Registry Table
+if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'database_table_fields';" | tail -n +2 | wc -l` -lt 1 ]];then
+  X='CREATE TABLE IF NOT EXISTS `'"${SYSTEM_DATABASE}"'`.`database_table_fields` ('
+  X=$X'`id` int(10) unsigned NOT NULL,'
+  X=$X'`database_table_id` int(10) unsigned NOT NULL,'
+  X=$X'`field` varchar(50) COLLATE utf8_unicode_ci NOT NULL,'
+  X=$X'`active` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`list` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`search` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`form` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`index` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`unique` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`encrypt` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
+  X=$X'`type` varchar(50) COLLATE utf8_unicode_ci NOT NULL'
+  X=$X') ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`database_table_fields` ADD PRIMARY KEY (`id`), ADD KEY `database_table_id` (`database_table_id`), ADD KEY `field` (`field`), ADD KEY `active` (`active`);'
+  $MY "$X"
+
+  X='ALTER TABLE `'"${SYSTEM_DATABASE}"'`.`database_table_fields` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;'
+  $MY "$X"
+fi
+
+
 echo " * Done setting up database for default Web site"
 
 exit 0
-
-
