@@ -72,17 +72,16 @@ $edit_fields=array(
 	),
 );
 
-//add database server table
-if(!empty($_POST['add'])&&!empty($_POST['database'])&&!empty($_POST['server'])&&!empty($_POST['table'])){
-  $d=preg_replace('/[^a-z0-9_]/','',$_POST['database']);
-  $t=preg_replace('/[^a-z0-9_]/','',$_POST['table']);
-  $s=preg_replace('/[^a-z0-9]/','',$_POST['server']);
-  if($d===$_POST['database']&&$s===$_POST['server']&&$t===$_POST['table']){
+//add database server table fields
+if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['field'])){
 	//get the database instance variable name
-    $dbMysqli=${"database_mysqli_$s"};
-    if(isset($dbMysqli)&&is_object($dbMysqli))
-      $dbMysqli->createDatabaseTable($d,$t);
-  }
+	$zDatabaseTable=$database_table_local->getRow($database,'database_table',(int)$d);
+	if(empty($zDatabaseTable['server'])) throw new Exception("Database Server Entry Not Found! d: $d");
+	$s=$zDatabaseTable['server'];
+	$dbMysqli=${"database_mysqli_$s"};
+	$d=$zDatabaseTable->['table']);
+	if($zDatabaseTable->['database']&&$zDatabaseTable->['table']&&isset($dbMysqli)&&is_object($dbMysqli))
+		$dbMysqli->createDatabaseTableField($zDatabaseTable->['database'],$zDatabaseTable->['table'],$_POST['field'],$_POST);
 }
 
 require_once dirname(__FILE__)."/template.php";

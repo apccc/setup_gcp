@@ -12,8 +12,8 @@ class database_mysqli extends mysqli
 	* @returns bool - success or failure of last query
 	**/
 	function createDatabaseTable($database,$table,$template='default'){
-		$d=$database;
-		$t=$table;
+		$d=preg_replace('/[^a-z0-9_]/','',$database);
+		$t=preg_replace('/[^a-z0-9_]/','',$table);
 		if($template==='default'){
 			$sql="CREATE DATABASE IF NOT EXISTS `$d` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 			if(!$this->query($sql)) throw new Exception("Database could not be created: $d");
@@ -21,7 +21,30 @@ class database_mysqli extends mysqli
 			if(!$this->query($sql)) throw new Exception("Database table could not be created: $d.$t");
 			$sql="ALTER TABLE ${d}.${t} ADD PRIMARY KEY (id)";
 			if(!$this->query($sql)) throw new Exception("Primary key id could not be created for: $d.$t");
+			return true;
 		}
+	}
+
+	/**
+	* Create empty template database
+	* @param string $database
+	* @param string $table
+	* @param string $field
+	* @param array $options
+	* @returns bool - success or failure of last query
+	**/
+	function createDatabaseTableField($database,$table,$field,$options=array()){
+		$d=preg_replace('/[^a-z0-9_]/','',$database);
+		$t=preg_replace('/[^a-z0-9_]/','',$table);
+		$f=preg_replace('/[^a-z0-9_]/','',$field);
+		$l=(int)$options['length'];
+		if(strtolower($options['type'])==='int'){
+			$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."` INT(".$l.") NOT NULL";
+			if(!$this->query($sql)) throw new Exception("Field could not be created for for: $d.$t");
+		} else {
+			throw new Exception("Field type ".$options['type']." not supported!");
+		}
+		return true;
 	}
 
 	/**
