@@ -463,6 +463,7 @@ if [[ `$MY "USE ${SYSTEM_DATABASE};SHOW TABLES LIKE 'database_table_fields';" | 
   X=$X'`unique` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
   X=$X'`encrypt` enum("T","F") COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT "T",'
   X=$X'`type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,'
+  X=$X'`length` int(10) unsigned NOT NULL DEFAULT "100",'
   X=$X'`priority` int(10) unsigned NOT NULL DEFAULT "100"'
   X=$X') ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
   $MY "$X"
