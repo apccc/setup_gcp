@@ -39,6 +39,23 @@ $edit_fields=array(
 	)
 );
 
+if(!empty($_POST['add'])&&!empty($_POST['database'])&&!empty($_POST['server'])&&!empty($_POST['table'])){
+  $d=preg_replace('/[^a-z0-9_]/','',$_POST['database']);
+  $t=preg_replace('/[^a-z0-9_]/','',$_POST['table']);
+  $s=preg_replace('/[^a-z0-9]/','',$_POST['server']);
+  if($d===$_POST['database']&&$s===$_POST['server']&&$t===$_POST['table']){
+    $dbMysqli=${"database_mysqli_$s"};
+    if(isset($dbMysqli)&&is_object($dbMysqli)){
+      $sql="CREATE DATABASE IF NOT EXISTS `$d` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+      $x=$dbMysqli->mysqlidb->query($sql);
+      $sql="CREATE TABLE IF NOT EXISTS `$d`.`$t` (`id` bigint(20) UNSIGNED NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+      $x=$dbMysqli->mysqlidb->query($sql);
+      $sql="ALTER TABLE ${d}.${t} ADD PRIMARY KEY (id)";
+      $x=$dbMysqli->mysqlidb->query($sql);
+    }
+  }
+}
+
 require_once dirname(__FILE__)."/template.php";
 $admin_class=new admin_doc_class;
 ?>
