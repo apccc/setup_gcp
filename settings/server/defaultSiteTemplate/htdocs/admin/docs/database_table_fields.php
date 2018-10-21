@@ -75,7 +75,7 @@ $edit_fields=array(
 //add database server table fields
 if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['field'])){
 	//get the database instance variable name
-	$zDatabaseTable=$database_mysqli_local->getRow($database,'database_table',(int)$d);
+	$database_mysqli_local->mysqlidb->getRow($database,'database_table',(int)$d);
 	if(empty($zDatabaseTable['server'])) throw new Exception("Database Server Entry Not Found! d: $d");
 	$s=$zDatabaseTable['server'];
 	$dbMysqli=${"database_mysqli_$s"};
