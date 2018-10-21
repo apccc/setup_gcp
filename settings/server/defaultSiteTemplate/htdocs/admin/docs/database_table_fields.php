@@ -72,6 +72,19 @@ $edit_fields=array(
 	),
 );
 
+//add database server table
+if(!empty($_POST['add'])&&!empty($_POST['database'])&&!empty($_POST['server'])&&!empty($_POST['table'])){
+  $d=preg_replace('/[^a-z0-9_]/','',$_POST['database']);
+  $t=preg_replace('/[^a-z0-9_]/','',$_POST['table']);
+  $s=preg_replace('/[^a-z0-9]/','',$_POST['server']);
+  if($d===$_POST['database']&&$s===$_POST['server']&&$t===$_POST['table']){
+	//get the database instance variable name
+    $dbMysqli=${"database_mysqli_$s"};
+    if(isset($dbMysqli)&&is_object($dbMysqli))
+      $dbMysqli->createDatabaseTable($d,$t);
+  }
+}
+
 require_once dirname(__FILE__)."/template.php";
 $admin_class=new admin_doc_class;
 ?>

@@ -5,6 +5,26 @@
 class database_mysqli extends mysqli
 {
 	/**
+	* Create empty template database
+	* @param string $database
+	* @param string $table
+	* @param string $template - the template to use
+	* @returns bool - success or failure of last query
+	**/
+	function createDatabaseTable($database,$table,$template='default'){
+		$d=$database;
+		$t=$table;
+		if($template==='default'){
+			$sql="CREATE DATABASE IF NOT EXISTS `$d` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+			if(!$this->query($sql)) throw new Exception("Database could not be created: $d");
+			$sql="CREATE TABLE IF NOT EXISTS `$d`.`$t` (`id` bigint(20) UNSIGNED NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+			if(!$this->query($sql)) throw new Exception("Database table could not be created: $d.$t");
+			$sql="ALTER TABLE ${d}.${t} ADD PRIMARY KEY (id)";
+			if(!$this->query($sql)) throw new Exception("Primary key id could not be created for: $d.$t");
+		}
+	}
+
+	/**
 	* Insert Into Database Table
 	* @param string $database
 	* @param string $table
