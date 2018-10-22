@@ -22,10 +22,8 @@ $edit_fields=array();
 if(!isset($dbMysqli)||!is_object($dbMysqli))
 	throw new Exception("dbMysqli object not found for server $server");
 
-$zDatabaseTableFields=$database_mysqli_local->mysqlidb->getRows($SYSTEM_DATABASE,'database_table_fields',array(
-	'database_table_id'=>$databaseTableId,
-	'active'=>'T'
-	));
+$sql="SELECT * FROM `".$SYSTEM_DATABASE."`.`database_table_fields` WHERE `database_table_id`='".(int)$databaseTableId."' AND `active`='T' ORDER BY `priority` ASC";
+$zDatabaseTableFields=$database_mysqli_local->mysqlidb->getRowsFromQuery($sql);
 
 if(!empty($zDatabaseTableFields))
 	foreach($zDatabaseTableFields as $f)
