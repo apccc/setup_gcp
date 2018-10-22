@@ -34,11 +34,13 @@ class database_mysqli extends mysqli
 	* @returns bool - success or failure of last query
 	**/
 	function createDatabaseTableField($database,$table,$field,$options=array()){
+		//prep vars
 		$d=preg_replace('/[^a-z0-9_]/','',$database);
 		$t=preg_replace('/[^a-z0-9_]/','',$table);
 		$f=preg_replace('/[^a-z0-9_]/','',$field);
 		$l=(int)$options['length'];
 		$type=strtolower($options['type']);
+		//create field
 		$sql=$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."` ";
 		if($type==='int'){
 			$sql.="INT";
@@ -48,7 +50,12 @@ class database_mysqli extends mysqli
 			throw new Exception("Field type ".$options['type']." not supported!");
 		}
 		$sql.="(".$l.") NOT NULL";
-		if(!$this->query($sql)) throw new Exception("Field could not be created for: $d.$t (".$sql.")");
+		if(!$this->query($sql)) throw new Exception("Field could not be created for: $d.$t $f (".$sql.")");
+		//add index
+		if($options['index']==='T'){
+			$sql="ALTER TABLE `".$d."`.`".$t."` ADD INDEX(`".$f."`)";
+			if(!$this->query($sql)) throw new Exception("Field could not be indexed for: $d.$t $f (".$sql.")");
+		}
 		return true;
 	}
 
