@@ -39,16 +39,16 @@ class database_mysqli extends mysqli
 		$f=preg_replace('/[^a-z0-9_]/','',$field);
 		$l=(int)$options['length'];
 		$type=strtolower($options['type']);
-		$sql=$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."`";
+		$sql=$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."` ";
 		if($type==='int'){
 			$sql.="INT";
 		} elseif($type==='text'){
-			$sql="VARCHAR";
+			$sql.="VARCHAR";
 		} else {
 			throw new Exception("Field type ".$options['type']." not supported!");
 		}
 		$sql.="(".$l.") NOT NULL";
-		if(!$this->query($sql)) throw new Exception("Field could not be created for for: $d.$t");
+		if(!$this->query($sql)) throw new Exception("Field could not be created for: $d.$t (".$sql.")");
 		return true;
 	}
 
