@@ -42,6 +42,32 @@ zInterface::addBotJS(""
 	."});"
 );
 
+$sql="SELECT * FROM `".$SYSTEM_DATABASE."`.`database_tables` WHERE `active`='T'";
+$zDatabaseTables=$database_mysqli_local->mysqlidb->getRowsFromQuery($sql);
+
+$pNav=array(
+	'css'=>'CSS',
+	'database_tables'=>'Database Tables',
+	'database_table_fields'=>'Database Table Fields',
+	'documentation'=>'Documentation',
+	'googleCloudStorage_backupSchedule'=>'GC Backup Schedule',
+	'googleCloudStorage_buckets'=>'GC Buckets',
+	'googleComputeEngine_VMInstances'=>'GC VMs',
+	'js'=>'JS',
+	'navigation'=>'Navigation',
+	'site_pages'=>'Site Pages',
+	'site_sections'=>'Site Sections',
+	'sites'=>'Sites',
+	'sites_vms'=>'Sites VMS',
+	'users'=>'Users'
+);
+foreach($zDatabaseTables as $x)
+	$pNav[$x['id']]=$x['database']." : ".$x['table'];
+asort($pNav);
+$pNavStr='';
+foreach($pNav as $k=>$v)
+	$pNavStr.="<li><a href=\"?p=".$k."\">".$v."</a></li>";
+
 zInterface::addMidContent(""
 ."
 <div>
@@ -54,20 +80,7 @@ zInterface::addMidContent(""
 	.">"
 	."<ul>"
 		."<li><a href='/admin/'>Admin Home</a></li>"
-		."<li><a href='?p=css'>CSS</a></li>"
-		."<li><a href='?p=database_tables'>Database Tables</a></li>"
-		."<li><a href='?p=database_table_fields'>Database Table Fields</a></li>"
-		."<li><a href='?p=documentation'>Documentation</a></li>"
-		."<li><a href='?p=googleCloudStorage_backupSchedule'>GC Backup Schedule</a></li>"
-		."<li><a href='?p=googleCloudStorage_buckets'>GC Buckets</a></li>"
-		."<li><a href='?p=googleComputeEngine_VMInstances'>GC VMs</a></li>"
-		."<li><a href='?p=js'>JS</a></li>"
-		."<li><a href='?p=navigation'>Navigation</a></li>"
-		."<li><a href='?p=site_pages'>Site Pages</a></li>"
-		."<li><a href='?p=site_sections'>Site Sections</a></li>"
-		."<li><a href='?p=sites'>Sites</a></li>"
-		."<li><a href='?p=sites_vms'>Sites VMS</a></li>"
-		."<li><a href='?p=users'>Users</a></li>"
+		.$pNavStr
 		."<li><a href='".$SITE_PROTOCOL."://".$SITE_CONTROL_DOMAIN."/'>Home</a></li>"
 	."</ul>"
 ."</td>"
