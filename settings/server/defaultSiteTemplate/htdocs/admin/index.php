@@ -74,9 +74,14 @@ zInterface::addMidContent(""
 ."<td valign='top' style='padding:10px 0;'>"
 );
 
-if(isset($p)&&strlen($p)&&is_file(dirname(__FILE__)."/docs/".$p.".php"))
+if(isset($p)&&strlen($p))
 {
-	include dirname(__FILE__)."/docs/".$p.".php";
+	if(is_file(__DIR__."/docs/".$p.".php"))
+		include __DIR__."/docs/".$p.".php";
+	elseif(is_numeric($p))
+		include __DIR__."/docs/server.database.table.php";
+	else
+		throw new Exception("Bad p parameter");
 	if($admin_class) zInterface::addMidContent($admin_class->output_content);
 }
 else
