@@ -37,14 +37,24 @@ if(!empty($zDatabaseTableFields))
 		if($f['search']==='T')
 			$search_fields[]=$f['field'];
 
-if(!empty($zDatabaseTableFields))
-	foreach($zDatabaseTableFields as $f)
-		if($f['form']==='T')
-			$edit_fields[$f['field']]=array(
-				'field_name'=>$f['field'],
-				'edit_field_type'=>$f['type']
-			);
+if(!empty($zDatabaseTableFields)){
+	foreach($zDatabaseTableFields as $f){
+		$edit_fields[$f['field']]=array(
+			'field_name'=>$f['field']
+		);
+		if(!empty($f['type']))
+			$edit_fields[$f['field']]['edit_field_type']=$f['type'];
 
+		if($f['type']==='int'){
+			$edit_fields[$f['field']]['attr.pattern']='^[0-9]*$';
+			$edit_fields[$f['field']]['attr.class']='validate';
+			$edit_fields[$f['field']]['edit_field_type']='text';
+		}
+
+		if($f['form']!=='T')
+			$edit_fields[$f['field']]['edit_field_type']='none';
+	}
+}
 if($server!='local')
 	$template_database_mysqli_alternate=$dbMysqli;
 
