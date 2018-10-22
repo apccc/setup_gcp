@@ -25,10 +25,12 @@ $edit_fields=array(
 		'attr.required'=>"required"
 	),
 	'active'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T',
 	),
 	'controls'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T'
 	),
 	'server'=>array(
 		'field_name'=>'server',
