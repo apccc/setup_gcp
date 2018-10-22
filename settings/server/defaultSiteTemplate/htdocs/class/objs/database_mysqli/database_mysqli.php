@@ -53,7 +53,7 @@ class database_mysqli extends mysqli
 		if(!$this->query($sql)) throw new Exception("Field could not be created for: $d.$t $f (".$sql.")");
 		//add index
 		if($options['index']==='T'){
-			$sql="ALTER TABLE `".$d."`.`".$t."` ADD INDEX(`".$f."`)";
+			$sql="ALTER TABLE `".$d."`.`".$t."` ADD ".($options['unique']==='T'?"UNIQUE":"INDEX")."(`".$f."`)";
 			if(!$this->query($sql)) throw new Exception("Field could not be indexed for: $d.$t $f (".$sql.")");
 		}
 		return true;
