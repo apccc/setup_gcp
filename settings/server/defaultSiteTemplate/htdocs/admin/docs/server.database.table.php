@@ -10,8 +10,8 @@ $zDatabaseTable=$database_mysqli_local->mysqlidb->getRow($SYSTEM_DATABASE,'datab
 if(empty($zDatabaseTable['server'])) throw new Exception("Database Server Entry Not Found! $databaseTableId");
 
 $server=preg_replace('[^a-z0-9_]','',$zDatabaseTable['server']);
-$database=preg_match('/[^a-z0-9_]/','',$zDatabaseTable['database']);
-$table=preg_match('/[^a-z0-9_]/','',$zDatabaseTable['table']);
+$database=preg_replace('/[^a-z0-9_]/','',$zDatabaseTable['database']);
+$table=preg_replace('/[^a-z0-9_]/','',$zDatabaseTable['table']);
 $dbMysqli=${"database_mysqli_$server"};
 $single_name=str_replace('_',' ',$table)." entry";
 $multiple_name=$single_name." entries";
