@@ -21,6 +21,8 @@ class database_mysqli extends mysqli
 			if(!$this->query($sql)) throw new Exception("Database table could not be created: $d.$t");
 			$sql="ALTER TABLE ${d}.${t} ADD PRIMARY KEY (id)";
 			if(!$this->query($sql)) throw new Exception("Primary key id could not be created for: $d.$t");
+			$sql="ALTER TABLE ${d}.${t} MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT";
+			if(!$this->query($sql)) throw new Exception("Primary key id could not be auto incremented for: $d.$t");
 			return true;
 		}
 	}
