@@ -42,9 +42,6 @@ zInterface::addBotJS(""
 	."});"
 );
 
-$sql="SELECT * FROM `".$SYSTEM_DATABASE."`.`database_tables` WHERE `active`='T'";
-$zDatabaseTables=$database_mysqli_local->mysqlidb->getRowsFromQuery($sql);
-
 $pNav=array(
 	'css'=>'CSS',
 	'database_tables'=>'Database Tables',
@@ -61,7 +58,9 @@ $pNav=array(
 	'sites_vms'=>'Sites VMS',
 	'users'=>'Users'
 );
-foreach($zDatabaseTables as $x)
+$sql="SELECT * FROM `".$SYSTEM_DATABASE."`.`database_tables` WHERE `active`='T' AND `controls`='T'";
+$pNavDatabaseTables=$database_mysqli_local->mysqlidb->getRowsFromQuery($sql);
+foreach($pNavDatabaseTables as $x)
 	$pNav[$x['id']]=$x['database']." : ".$x['table'];
 asort($pNav);
 $pNavStr='';
