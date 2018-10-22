@@ -29,25 +29,32 @@ $edit_fields=array(
 		'attr.required'=>"required"
 	),
 	'active'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T'
 	),
 	'list'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T'
 	),
 	'search'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T'
 	),
 	'form'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'T'
 	),
 	'index'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'F'
 	),
 	'unique'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'F'
 	),
 	'encrypt'=>array(
-		'edit_field_type'=>'t_or_f'
+		'edit_field_type'=>'t_or_f',
+		'default'=>'F'
 	),
 	'type'=>array(
 		'field_name'=>'type',
@@ -61,7 +68,7 @@ $edit_fields=array(
 		'attr.pattern'=>"^[0-9]+$",
 		'attr.class'=>"validate",
 		'attr.required'=>"required",
-		'default_value'=>"100"
+		'default_value'=>"20"
 	),
 	'priority'=>array(
 		'field_name'=>'priority',
