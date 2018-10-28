@@ -53,8 +53,11 @@ if(!empty($zDatabaseTableFields)){
 		if($f['form']!=='T')
 			$edit_fields[$f['field']]['edit_field_type']='none';
 
-		if($f['encrypt']==='T')
+		if($f['encrypt']==='T'){
 			$encryptionRequired=true;
+			$edit_fields[$f['field']]['MYSQL_AES_KEY']=$MYSQL_AES_KEY;
+			$edit_fields[$f['field']]['keyEncryptVersion']=2;
+		}
 	}
 }
 
