@@ -1666,6 +1666,14 @@ class admin_doc_class
 				."</td></tr>"
 			;
 		}
+		elseif($f['edit_field_type']==='nonce')
+		{
+			if(empty($f['value']))
+				$f['value']=exec("tr -cd a-zA-Z0-9_.- < /dev/urandom 2> /dev/null | head -c 512");
+			$out.=""
+				.'<input type="hidden" name="'.$f['field_name'].'" value="'.$f['value'].'" />'
+			;
+		}
 		elseif($f['edit_field_type']=='template_plug-in')
 		{
 			if(is_file(__DIR__."/includes/plug-ins/".$f['plug-in'].".plug-in.php"))
