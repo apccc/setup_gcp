@@ -50,6 +50,9 @@ if(!empty($zDatabaseTableFields)){
 			$edit_fields[$f['field']]['edit_field_type']='text';
 		}
 
+		if($f['type']==='text'&&(int)$f['length']>255)
+			$edit_fields[$f['field']]['edit_field_type']='textarea';
+
 		if($f['form']!=='T')
 			$edit_fields[$f['field']]['edit_field_type']='none';
 
