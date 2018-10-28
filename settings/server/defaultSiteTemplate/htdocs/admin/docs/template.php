@@ -484,7 +484,8 @@ class admin_doc_class
 							$sql.=""
 								.",AES_DECRYPT(".$field['field_name'].","
 								.(!empty($this->edit_fields['nonce'])&&isset($field['keyEncryptVersion'])?""
-									.($field['keyEncryptVersion']==1?"SHA1(CONCAT('".$field['MYSQL_AES_KEY']."',`nonce`))":"")
+									.($field['keyEncryptVersion']===1?"SHA1(CONCAT('".$field['MYSQL_AES_KEY']."',`nonce`))":"")
+									.($field['keyEncryptVersion']===2?"SHA2(CONCAT('".$field['MYSQL_AES_KEY']."',`nonce`),512)":"")
 									:"'".$field['MYSQL_AES_KEY']."'"
 								)
 								.") AS `".$field['field_name']."_AES_DECRYPTED`"
@@ -611,14 +612,15 @@ class admin_doc_class
 
 				if(isset($field['_update_string_eval']))
 					$sql.=eval($field['_update_string_eval']);
-				elseif(!empty($field['MYSQL_AES_KEY']))
+				elseif(!empty($field['MYSQL_AES_KEY'])&&isset($field['keyEncryptVersion']))
 					$sql.=""
-						."`".$field['field_name']."`=AES_ENCRYPT('".$this->database_mysqli->mysqlidb->real_escape_string($_POST[$field['field_name']])."','"
-						.(!empty($_POST['nonce'])&&isset($field['keyEncryptVersion'])?""
-							.($field['keyEncryptVersion']==1?$this->buildAESKeyFromKeyAndNonceV1($field['MYSQL_AES_KEY'],$_POST['nonce']):"")
+						."`".$field['field_name']."`=AES_ENCRYPT('".$this->database_mysqli->mysqlidb->real_escape_string($_POST[$field['field_name']])."',"
+						.(!empty($_POST['nonce'])?""
+							.($field['keyEncryptVersion']===1?$this->buildAESKeyFromKeyAndNonceV1($field['MYSQL_AES_KEY'],$_POST['nonce']):"")
+							.($field['keyEncryptVersion']===2?"SHA2('".$field['MYSQL_AES_KEY'].$_POST['nonce']."'),512)":"")
 							:$field['MYSQL_AES_KEY']
 						)
-						."') "
+						.") "
 					;
 				elseif(!empty($field['MYSQL_COMPRESSED'])&&$field['MYSQL_COMPRESSED'])
 					$sql.="`".$field['field_name']."`=COMPRESS('".$this->database_mysqli->mysqlidb->real_escape_string((isset($_POST[$field['field_name']])?$_POST[$field['field_name']]:""))."') ";
@@ -1875,7 +1877,7 @@ class admin_doc_class
 
 	private function buildAESKeyFromKeyAndNonceV1($key,$nonce)
 	{
-		return hash('sha1',$key.$nonce);
+		return "'".hash('sha1',$key.$nonce)."'";
 	}
 
         /**
