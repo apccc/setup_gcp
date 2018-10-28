@@ -617,7 +617,7 @@ class admin_doc_class
 						."`".$field['field_name']."`=AES_ENCRYPT('".$this->database_mysqli->mysqlidb->real_escape_string($_POST[$field['field_name']])."',"
 						.(!empty($_POST['nonce'])?""
 							.($field['keyEncryptVersion']===1?$this->buildAESKeyFromKeyAndNonceV1($field['MYSQL_AES_KEY'],$_POST['nonce']):"")
-							.($field['keyEncryptVersion']===2?"SHA2('".$field['MYSQL_AES_KEY'].$_POST['nonce']."'),512)":"")
+							.($field['keyEncryptVersion']===2?"SHA2('".$field['MYSQL_AES_KEY'].$_POST['nonce']."',512)":"")
 							:$field['MYSQL_AES_KEY']
 						)
 						.") "
