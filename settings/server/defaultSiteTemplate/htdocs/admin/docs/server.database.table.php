@@ -35,6 +35,7 @@ if(!empty($zDatabaseTableFields))
 		if($f['search']==='T')
 			$search_fields[]=$f['field'];
 
+$encryptionRequired=false;
 if(!empty($zDatabaseTableFields)){
 	foreach($zDatabaseTableFields as $f){
 		$edit_fields[$f['field']]=array(
@@ -51,8 +52,19 @@ if(!empty($zDatabaseTableFields)){
 
 		if($f['form']!=='T')
 			$edit_fields[$f['field']]['edit_field_type']='none';
+
+		if($f['encrypt']==='T')
+			$encryptionRequired=true;
 	}
 }
+
+if($encryptionRequired){
+	$edit_fields['nonce']=array(
+			'field_name'=>'nonce',
+			'edit_field_type'=>'nonce'
+	);
+}
+
 if($server!='local')
 	$template_database_mysqli_alternate=$dbMysqli;
 
