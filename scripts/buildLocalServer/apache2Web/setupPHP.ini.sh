@@ -16,10 +16,13 @@ echo " * Configuring php.ini"
 #setup the auto_prepend_file
 F="$AUTO_PREPEND_FILE"
 echo '<?php' | sudo tee "$F" > /dev/null
+sudo chown www-data "$F"
+sudo chmod 600 "$F"
 echo '$SYSTEM_DATABASE="'"$SYSTEM_DATABASE"'";' | sudo tee -a "$F" > /dev/null
 echo '$MYSQL_USER="'"$MYSQL_WEB_USER"'";' | sudo tee -a "$F" > /dev/null
 echo '$MYSQL_PASS="'"$MYSQL_WEB_USER_PASS"'";' | sudo tee -a "$F" > /dev/null
 echo '$MYSQL_1_HOST="'"$MYSQL_1_HOST"'";' | sudo tee -a "$F" > /dev/null
+echo '$MYSQL_AES_KEY="'"$MYSQL_AES_KEY"'";' | sudo tee -a "$F" > /dev/null
 echo '$RECAPTCHA_SITE_KEY="'"$RECAPTCHA_SITE_KEY"'";' | sudo tee -a "$F" > /dev/null
 echo '$RECAPTCHA_SECRET_KEY="'"$RECAPTCHA_SECRET_KEY"'";' | sudo tee -a "$F" > /dev/null
 echo '$MAILGUN_SMTP_USERNAME="'"$MAILGUN_SMTP_USERNAME"'";' | sudo tee -a "$F" > /dev/null
