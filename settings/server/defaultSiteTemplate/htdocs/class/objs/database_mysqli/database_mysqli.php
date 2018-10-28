@@ -42,9 +42,16 @@ class database_mysqli extends mysqli
 		$f=preg_replace('/[^a-z0-9_]/','',$field);
 		$l=(int)$options['length'];
 		$type=strtolower($options['type']);
+		//ensure we have a nonce field, if using encryption
+		if($options['encrypt']==='T'){
+			$sql="ALTER TABLE `".$d."`.`".$t."` ADD IF NOT EXISTS `nonce` VARCHAR(250) NOT NULL";
+			if(!$this->query($sql)) throw new Exception("Field nonce could not be checked for: $d.$t $f (".$sql.")");
+		}
 		//create field
-		$sql=$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."` ";
-		if($type==='int'){
+		$sql="ALTER TABLE `".$d."`.`".$t."` ADD `".$f."` ";
+		if($options['encrypt']==='T'){
+			$sql.="VARBINARY";
+		} elseif($type==='int'){
 			$sql.="INT";
 		} elseif($type==='text'){
 			$sql.="VARCHAR";
