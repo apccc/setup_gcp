@@ -120,6 +120,12 @@ if [ `grep '<<WHITELISTEDIPS>>' "$F" | wc -l` -gt 0 ];then
     echo " *** Whitelisting IP $ZWHITEIP ***"
   fi
 fi
+if [ `grep '<<MYSQLAESKEY>>' "$F" | wc -l` -gt 0 ];then
+  MYSQLAESKEY=`tr -cd a-zA-Z0-9_.- < /dev/urandom 2> /dev/null | head -c 512`
+  echo " * Created MySQL AES KEY"
+  sed -i -e "s/<<MYSQLAESKEY>>/${MYSQLAESKEY}/g" "$F"
+fi
+
 
 #Authenticate
 gcloud auth login
