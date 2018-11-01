@@ -63,6 +63,16 @@ $edit_fields=array(
 		'attr.required'=>"required",
 		'default_value'=>"text"
 	),
+	'reference_table'=>array(
+		'field_name'=>'reference_table',
+		'blank_top_select'=>true,
+		'input_value'=>'id',
+		'input_visible'=>'zname',
+		'select_db'=>$database,
+		'select_table'=>'database_tables',
+		'edit_field_type'=>'select',
+		'sql'=>"SELECT `id`,CONCAT(`database`,':',`table`) AS `zname` FROM `".$database."`.`database_tables` WHERE `active`='T' ORDER BY `database` ASC, `table` ASC"
+	),
 	'length'=>array(
 		'field_name'=>'length',
 		'attr.pattern'=>"^[0-9]+$",
