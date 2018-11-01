@@ -92,6 +92,12 @@ $edit_fields=array(
 
 //add database server table fields
 if(!empty($_POST['add'])&&!empty($_POST['database_table_id'])&&!empty($_POST['field'])){
+	//force the format of fields with a reference table
+	if(!empty($_POST['reference_table'])&&$_POST['reference_table']){
+		$_POST['type']='int';
+		$_POST['length']=10;
+		$_POST['index']='T';
+	}
 	//get the database instance variable name
 	$zDatabaseTable=$database_mysqli_local->mysqlidb->getRow($database,'database_tables',(int)$_POST['database_table_id']);
 	if(empty($zDatabaseTable['server'])) throw new Exception("Database Server Entry Not Found! d: ".$_POST['database_table_id']);
