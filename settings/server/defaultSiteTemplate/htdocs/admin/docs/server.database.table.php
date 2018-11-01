@@ -61,6 +61,19 @@ if(!empty($zDatabaseTableFields)){
 			$edit_fields[$f['field']]['MYSQL_AES_KEY']=$MYSQL_AES_KEY;
 			$edit_fields[$f['field']]['keyEncryptVersion']=2;
 		}
+
+		if($f['reference_table']){
+			$zReferenceDatabaseTable=$database_mysqli_local->mysqlidb->getRow($SYSTEM_DATABASE,'database_tables',(int)$f['reference_table']);
+			$edit_fields[$f['field']]=array(
+				'field_name'=>$f['field'],
+				'blank_top_select'=>false,
+				'input_value'=>'id',
+				'input_visible'=>'moniker',
+				'select_db'=>$zReferenceDatabaseTable['database'],
+				'select_table'=>$zReferenceDatabaseTable['table'],
+				'edit_field_type'=>'select'
+			);
+		}
 	}
 }
 
