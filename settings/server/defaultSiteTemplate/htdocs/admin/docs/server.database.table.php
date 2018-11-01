@@ -66,7 +66,7 @@ if(!empty($zDatabaseTableFields)){
 			$zReferenceDatabaseTable=$database_mysqli_local->mysqlidb->getRow($SYSTEM_DATABASE,'database_tables',(int)$f['reference_table']);
 			$edit_fields[$f['field']]=array(
 				'field_name'=>$f['field'],
-				'blank_top_select'=>false,
+				'blank_top_select'=>true,
 				'input_value'=>'id',
 				'input_visible'=>'moniker',
 				'select_db'=>$zReferenceDatabaseTable['database'],
