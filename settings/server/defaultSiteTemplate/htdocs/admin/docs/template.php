@@ -511,7 +511,17 @@ class admin_doc_class
 			}
 			$this->output_content.=""
 				."<div id='title_div'><a href='".$this->reGet()."'>".$this->multiple_name."</a></div>"
-				."<form action='' method='post' enctype='multipart/form-data'><table id='single_table'>"
+				."<form "
+					."id='single_form' "
+					."action='' "
+					."method='post' "
+					."enctype='multipart/form-data' "
+					."zdatabase='".$this->database."' "
+					."ztable='".$this->table."' "
+					."zfield='".$this->primary_field."' "
+					."zval='".(isset($this->id)&&is_numeric($this->id)?$this->id:'')."'"
+					.">"
+				."<table id='single_table'>"
 			;
 			if(count($this->edit_fields))
 			{
