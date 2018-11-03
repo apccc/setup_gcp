@@ -72,7 +72,7 @@ zInterface::addMidContent(""
 <div>
 <a href='javascript:void(0);' id='leftAdminBoxToggle'>&laquo;</a>
 </div>
-<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+<table id='adminBox' border='0' cellpadding='0' cellspacing='0' width='100%'>
 <tr>
 <td id='leftAdminBox' valign='top' width='150' "
 	."style='padding:10px 30px 10px 0;".(isset($_COOKIE['cookLeftAdminBox'])&&$_COOKIE['cookLeftAdminBox']==1?"display:none;":"")."'"
@@ -83,7 +83,7 @@ zInterface::addMidContent(""
 		."<li><a href='".$SITE_PROTOCOL."://".$SITE_CONTROL_DOMAIN."/'>Home</a></li>"
 	."</ul>"
 ."</td>"
-."<td valign='top' style='padding:10px 0;'>"
+."<td id='rightAdminBox' valign='top' style='padding:10px 0;'>"
 );
 
 if(isset($p)&&strlen($p))
