@@ -13,18 +13,23 @@ class curlRequest implements iCurlRequest
 	/**
 	* Perform a Curl Post Request
 	* @param string $url - The destination URL
-	* @param array $params - The Post Fields
+	* @param mixed $postfields - The Post Fields - or post body
 	* @param bool $includeHeaders - Include the headers or not.
 	* @param array $cookies - The Cookies
+	* @param array $headers - The Headers
 	* @return string - The response from the URL being posted to
 	*/
-	public static function post($url=NULL,$params=array(),$includeHeaders=false,$cookies=NULL)
+	public static function post($url=NULL,$postfields=NULL,$includeHeaders=false,$cookies=NULL,$headers=array())
 	{
 		if(!is_string($url)||!parse_url($url)) return false;
 		$curl=curl_init($url);
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
 		//include headers
-		if($includeHeaders) curl_setopt($curl,CURLOPT_HEADER,1);
+		if($includeHeaders){
+			curl_setopt($curl,CURLOPT_HEADER,1);
+			if(!empty($headers)&&is_array($headers))
+				curl_setopt($curl,CURLOPT_HTTPHEADER,$headers);
+		}
 		//set cookies
 		if(!empty($cookies)&&is_array($cookies))
 			foreach($cookies as $k => $v)
@@ -32,8 +37,8 @@ class curlRequest implements iCurlRequest
 		//set the connection to post
 		curl_setopt($curl,CURLOPT_POST,1);
 		//set the params
-		if(is_array($params)&&count($params))
-			curl_setopt($curl,CURLOPT_POSTFIELDS,$params);
+		if(!empty($postfields))
+			curl_setopt($curl,CURLOPT_POSTFIELDS,$postfields);
 		//set the user agent
 		curl_setopt($curl,CURLOPT_USERAGENT,self::CURL_USERAGENT);
 		//exec curl
