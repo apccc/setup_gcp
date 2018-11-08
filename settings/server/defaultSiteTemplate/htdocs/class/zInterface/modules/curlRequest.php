@@ -24,12 +24,12 @@ class curlRequest implements iCurlRequest
 		if(!is_string($url)||!parse_url($url)) return false;
 		$curl=curl_init($url);
 		curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-		//include headers
-		if($includeHeaders){
+		//include headers in output
+		if($includeHeaders)
 			curl_setopt($curl,CURLOPT_HEADER,1);
-			if(!empty($headers)&&is_array($headers))
-				curl_setopt($curl,CURLOPT_HTTPHEADER,$headers);
-		}
+		//set headers
+		if(!empty($headers)&&is_array($headers))
+			curl_setopt($curl,CURLOPT_HTTPHEADER,$headers);
 		//set cookies
 		if(!empty($cookies)&&is_array($cookies))
 			foreach($cookies as $k => $v)
