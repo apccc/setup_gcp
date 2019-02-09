@@ -3,7 +3,7 @@ source ~/setup-config/setup_gcp/core.sh
 
 PHPINI=`sudo find /etc/ -name "php.ini" | grep 'apache' | head -n 1`
 PHPINICLI=`sudo find /etc/ -name "php.ini" | grep 'cli' | head -n 1`
-AUTO_PREPEND_FILE="/var/www/auto_preprend_file.php"
+AUTO_PREPEND_FILE="/var/www/auto_prepend_file.php"
 TMPFILE=/tmp/setupphpini.txt
 
 if [ ! -f "$PHPINI" ];then
