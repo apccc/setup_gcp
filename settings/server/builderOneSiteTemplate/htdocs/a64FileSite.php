@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__).'/class/objs/database_mysqli/local/local.php';
 if(empty($_GET['f'])||empty($_GET['t'])||empty($_GET['id'])) exit;
+if(!in_array($_GET['t'],array('images'))
+   die("Table not found.");
 $r=$database_mysqli_local->mysqlidb->getRow($SITE_DATABASE,$_GET['t'],(int)$_GET['id']);
 if(empty($r[$_GET['f']])) exit;
 $f=$r[$_GET['f']];
