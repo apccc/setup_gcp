@@ -55,10 +55,15 @@ class database_mysqli extends mysqli
 			$sql.="INT";
 		} elseif($type==='text'){
 			$sql.="VARCHAR";
+		} elseif($type==='image'||$type==='file'){
+			$sql.="LONGBLOB ";
 		} else {
 			throw new Exception("Field type ".$options['type']." not supported!");
 		}
-		$sql.="(".$l.") NOT NULL";
+		$sql.=""
+			.($type==='image'||$type==='file'?"":"(".$l.")")
+			."NOT NULL"
+		;
 		if(!$this->query($sql)) throw new Exception("Field could not be created for: $d.$t $f (".$sql.")");
 		//add index
 		if($options['index']==='T'){
