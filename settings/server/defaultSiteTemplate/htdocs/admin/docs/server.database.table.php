@@ -52,7 +52,9 @@ if(!empty($zDatabaseTableFields)){
 
 		if($f['type']==='text'&&(int)$f['length']>255)
 			$edit_fields[$f['field']]['edit_field_type']='textarea';
-
+		elseif($f['type']==='image'||$f['type']==='file')
+			$edit_fields[$f['field']]['edit_field_type']='file_raw';
+		
 		if($f['form']!=='T')
 			$edit_fields[$f['field']]['edit_field_type']='none';
 
