@@ -611,6 +611,13 @@ class admin_doc_class
 					if($_POST[$field['field_name']]=base64_encode(file_get_contents($_FILES[$field['field_name']]['tmp_name'])))
 						unlink($_FILES[$field['field_name']]['tmp_name']);
 				}
+				elseif(isset($field['edit_field_type'])&&$field['edit_field_type']=='file_raw')
+				{
+					if(!isset($_FILES[$field['field_name']]['tmp_name'])||!is_file($_FILES[$field['field_name']]['tmp_name']))
+						continue;
+					if($_POST[$field['field_name']]=file_get_contents($_FILES[$field['field_name']]['tmp_name']))
+						unlink($_FILES[$field['field_name']]['tmp_name']);
+				}
 
 				if(isset($field['edit_field_type'])&&$field['edit_field_type']=='one_way_password'&&isset($_POST[$field['field_name']])&&strlen($_POST[$field['field_name']]))
 					require_once dirname(dirname(__DIR__)).'/class/zInterface/modules/loginModel.php';
@@ -1225,6 +1232,18 @@ class admin_doc_class
 								."<img src='data:".$mime_type.";base64,".$f['value']."' />"
 							."</div>"
 						:"")
+						.(isset($f['value'])&&strlen($f['value'])?"File Uploaded ":"")
+						."<input type='file' name='".$f['field_name']."'/>"
+					."</td>"
+				."</tr>"
+			;
+		}
+		elseif($f['edit_field_type']=='file_raw')
+		{
+			$out.=""
+				."<tr>"
+					."<td class='input_name'>".$f['edit_name']."</td>"
+					."<td class='input_value'>"
 						.(isset($f['value'])&&strlen($f['value'])?"File Uploaded ":"")
 						."<input type='file' name='".$f['field_name']."'/>"
 					."</td>"
