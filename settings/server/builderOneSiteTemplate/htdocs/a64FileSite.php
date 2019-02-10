@@ -4,8 +4,9 @@ if(empty($_GET['f'])||empty($_GET['t'])||empty($_GET['id'])) exit;
 if(!in_array($_GET['t'],array('images'))
    die("Table not found.");
 $r=$database_mysqli_local->mysqlidb->getRow($SITE_DATABASE,$_GET['t'],(int)$_GET['id']);
-if(empty($r[$_GET['f']])) exit;
-$f=$r[$_GET['f']];
+$f=preg_replace('/[^a-zA-Z0-9_]/','',$_GET['f']);
+if(!$f||empty($r[$f])) exit;
+$f=$r[$f];
 $fileData = base64_decode($f);
 $fo=finfo_open();
 $mime_type=finfo_buffer($fo,$fileData,FILEINFO_MIME_TYPE);
