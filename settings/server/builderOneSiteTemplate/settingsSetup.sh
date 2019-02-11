@@ -21,34 +21,38 @@ fi
 
 D=/var/www/$SUBDOMAIN
 F="$D/settings.php"
-echo " * Setting up $F"
-echo '<?php' | sudo tee "$F" > /dev/null
-echo '$COMPANY_NAME="'"$COMPANY_NAME"'";' | sudo tee -a "$F" > /dev/null
-echo '$COMPANY_DOMAIN="'"$COMPANY_DOMAIN"'";' | sudo tee -a "$F" > /dev/null
-echo '$COMPANY_ADMIN_SUBDOMAIN="'"$COMPANY_ADMIN_SUBDOMAIN"'";' | sudo tee -a "$F" > /dev/null
-echo '$SITE_DATABASE="'"$SITEDATABASE"'";' | sudo tee -a "$F" > /dev/null
-echo '$SITE_PROTOCOL="'"$SPROTOCOL"'";' | sudo tee -a "$F" > /dev/null
-echo '$SITE_CONTROL_DOMAIN="'"$SUBDOMAIN"'";' | sudo tee -a "$F" > /dev/null
-echo '$SITE_TOS_URL="'"$SITE_TOS_URL"'";' | sudo tee -a "$F" > /dev/null
-echo '$SITE_PRIVACY_URL="'"$SITE_PRIVACY_URL"'";' | sudo tee -a "$F" > /dev/null
-echo '?>' | sudo tee -a "$F" > /dev/null
+if [ ! -f "$F" ];then
+  echo " * Setting up $F"
+  echo '<?php' | sudo tee "$F" > /dev/null
+  echo '$COMPANY_NAME="'"$COMPANY_NAME"'";' | sudo tee -a "$F" > /dev/null
+  echo '$COMPANY_DOMAIN="'"$COMPANY_DOMAIN"'";' | sudo tee -a "$F" > /dev/null
+  echo '$COMPANY_ADMIN_SUBDOMAIN="'"$COMPANY_ADMIN_SUBDOMAIN"'";' | sudo tee -a "$F" > /dev/null
+  echo '$SITE_DATABASE="'"$SITEDATABASE"'";' | sudo tee -a "$F" > /dev/null
+  echo '$SITE_PROTOCOL="'"$SPROTOCOL"'";' | sudo tee -a "$F" > /dev/null
+  echo '$SITE_CONTROL_DOMAIN="'"$SUBDOMAIN"'";' | sudo tee -a "$F" > /dev/null
+  echo '$SITE_TOS_URL="'"$SITE_TOS_URL"'";' | sudo tee -a "$F" > /dev/null
+  echo '$SITE_PRIVACY_URL="'"$SITE_PRIVACY_URL"'";' | sudo tee -a "$F" > /dev/null
+  echo '?>' | sudo tee -a "$F" > /dev/null
+fi
 
 D=$D/htdocs
 F="$D/.htaccess"
-echo " * Setting up $F"
-echo 'RewriteEngine On' | sudo tee "$F" > /dev/null
-echo 'RewriteRule ^log$ /loginPage.php?%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^js/script([0-9-]+).js$ /jsPage.php?q=$1&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^css/style([0-9-]+).css$ /cssPage.php?q=$1&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^favicon.ico$ /a64File.php?f=favicon&t=sites&id='"$SITEID"'&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^afile/([a-z0-9_-]+)/([0-9]+).([a-z0-9_-]+).([a-z0-9]+)$ /a64File.php?f=$3&t=$1&id=$2&ext=$4&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^af/([a-z0-9_-]+)/([0-9]+).([a-z0-9_-]+).([a-z0-9]+)$ /a64FileSite.php?f=$3&t=$1&id=$2&ext=$4&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^accountCreated$ /accountCreatedPage.php?%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^accountActivate/([0-9]+)/([a-zA-Z0-9]+)$ /accountActivatePage.php?userid=$1&hash=$2 [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^resetPassword/([0-9]+)/([a-zA-Z0-9]+)$ /resetPasswordPage.php?userid=$1&hash=$2 [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^$ /index.php?section=index&page=index&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=index&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
-echo 'RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=$2&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+if [ ! -f "$F" ];then
+  echo " * Setting up $F"
+  echo 'RewriteEngine On' | sudo tee "$F" > /dev/null
+  echo 'RewriteRule ^log$ /loginPage.php?%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^js/script([0-9-]+).js$ /jsPage.php?q=$1&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^css/style([0-9-]+).css$ /cssPage.php?q=$1&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^favicon.ico$ /a64File.php?f=favicon&t=sites&id='"$SITEID"'&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^afile/([a-z0-9_-]+)/([0-9]+).([a-z0-9_-]+).([a-z0-9]+)$ /a64File.php?f=$3&t=$1&id=$2&ext=$4&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^af/([a-z0-9_-]+)/([0-9]+).([a-z0-9_-]+).([a-z0-9]+)$ /a64FileSite.php?f=$3&t=$1&id=$2&ext=$4&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^accountCreated$ /accountCreatedPage.php?%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^accountActivate/([0-9]+)/([a-zA-Z0-9]+)$ /accountActivatePage.php?userid=$1&hash=$2 [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^resetPassword/([0-9]+)/([a-zA-Z0-9]+)$ /resetPasswordPage.php?userid=$1&hash=$2 [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^$ /index.php?section=index&page=index&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=index&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+  echo 'RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ /index.php?section=$1&page=$2&%{QUERY_STRING} [PT,L]' | sudo tee -a "$F" > /dev/null
+fi
 
 echo " * Done setting up settingsSetup files for $SUBDOMAIN"
 
