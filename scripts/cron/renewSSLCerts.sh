@@ -5,7 +5,7 @@ source ~/setup-config/setup_gcp/core.sh
 echo " * Renewing SSL Certs"
 
 #ensure this hasn't been run in the last week
-if [ `$CC renewSSLCerts 20 1` != 'ok' ];then
+if [ `$CC renewSSLCerts 10 1` != 'ok' ];then
   echo " * renewSSLCerts check out has not expired!"
   exit 1
 fi
