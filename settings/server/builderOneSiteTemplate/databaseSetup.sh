@@ -187,7 +187,7 @@ if [[ `$MY "USE ${SITE_DATABASENAME};SHOW TABLES LIKE 'emails_to_notify';" | tai
   X='CREATE TABLE IF NOT EXISTS `'"${SITE_DATABASENAME}"'`.`emails_to_notify` ('
   X=$X'`id` int(10) unsigned NOT NULL,'
   X=$X'`identifier` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,'
-  X=$X'`email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,'
+  X=$X'`email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL'
   X=$X') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
   $MY "$X"
 
