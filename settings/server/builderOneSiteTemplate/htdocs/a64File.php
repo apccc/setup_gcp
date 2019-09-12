@@ -1,8 +1,10 @@
 <?php
 require_once dirname(__FILE__).'/class/objs/database_mysqli/local/local.php';
 if(empty($_GET['f'])||empty($_GET['t'])||empty($_GET['id'])) exit;
-if(!in_array($_GET['t'],array('images')))
-   die("Table not found.");
+if(!in_array($_GET['t'],array('images','sites')))
+   die("Error t");
+if(!in_array($_GET['f'],array('im','favicon')))
+   die("Error f");
 $r=$database_mysqli_local->mysqlidb->getRow($SYSTEM_DATABASE,$_GET['t'],(int)$_GET['id']);
 $f=preg_replace('/[^a-zA-Z0-9_]/','',$_GET['f']);
 if(!$f||empty($r[$f])) exit;
