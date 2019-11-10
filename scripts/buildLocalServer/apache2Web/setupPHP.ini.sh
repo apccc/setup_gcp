@@ -17,7 +17,7 @@ echo " * Configuring php.ini"
 F="$AUTO_PREPEND_FILE"
 echo '<?php' | sudo tee "$F" > /dev/null
 sudo chown www-data "$F"
-sudo chmod 600 "$F"
+sudo chmod 644 "$F"
 echo '$SYSTEM_DATABASE="'"$SYSTEM_DATABASE"'";' | sudo tee -a "$F" > /dev/null
 echo '$MYSQL_USER="'"$MYSQL_WEB_USER"'";' | sudo tee -a "$F" > /dev/null
 echo '$MYSQL_PASS="'"$MYSQL_WEB_USER_PASS"'";' | sudo tee -a "$F" > /dev/null
